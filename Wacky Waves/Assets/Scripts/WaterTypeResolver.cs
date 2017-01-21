@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class WaterTypeResolver : MonoBehaviour
 {
+    public const float WATER_HEIGHT_DEEP = 20; // 0 to 20
+    public const float WATER_HEIGHT_SHALLOW = 23; // 22 to 23
+
     public delegate void WaterTypeHandler(WaterType waterType);
     public event WaterTypeHandler OnWaterTypeChanged;
 
@@ -17,8 +20,8 @@ public class WaterTypeResolver : MonoBehaviour
 	public WaterType CurrentWaterType = WaterType.None; 
 
 	void Start () {
-		WaterTypeRanges.Add(WaterType.Deep,		20); // 0 to 20
-		WaterTypeRanges.Add(WaterType.Shallow,	23); // 22 to 23
+		WaterTypeRanges.Add(WaterType.Deep, WATER_HEIGHT_DEEP); 
+		WaterTypeRanges.Add(WaterType.Shallow,WATER_HEIGHT_SHALLOW);
 		//WaterTypeRanges.Add(WaterType.Ground,	23); // 23 to infin
 
 		var ray = new Ray(transform.position, transform.TransformDirection(Vector3.down));
