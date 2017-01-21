@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class WaveStateManager : MonoBehaviour {
-
+    // Needs more everything
 
     //public static readonly string WavePoints = "Wave";
     //public static readonly string DolphinPoints = "Dolphin";
@@ -17,17 +17,20 @@ public class WaveStateManager : MonoBehaviour {
     private static WaveStateManager instance;
     public static WaveStateManager Instance { get { return instance; } private set { instance = value; } }
 
-    public delegate void WaveHandler(Vector2 velocity,  float mass, string tag);
-    public event WaveHandler ScoreHandlers;
+    public delegate void WaveHandler(float mass);
+    public event WaveHandler WaveHandlers;
 
-    private int score;
+    private float mass;
+    private Vector2 velocity;
 
-    private Dictionary<string, int> scores;
+   // private Dictionary<string, int> scores;
 
     void Awake()
     {
         instance = this;
-        scores = new Dictionary<string, int>();
+        velocity = new Vector2(0, 0);
+        mass = 0;
+      // scores = new Dictionary<string, int>();
     }
 
     // Use this for initialization
@@ -42,8 +45,10 @@ public class WaveStateManager : MonoBehaviour {
 
     }
 
-    public void IncreaseMass(float mass)
+    public void IncreaseMass(float imass)
     {
+        mass += imass;
+        WaveHandlers.Invoke(mass);
         //int dscore = 0;
         //score += points;
         //if (!scores.TryGetValue(tag, out dscore))
@@ -60,11 +65,7 @@ public class WaveStateManager : MonoBehaviour {
         //    ScoreHandlers.Invoke(points, tag);
         //}
     }
-
-    //public bool GetSubScore(string tag, out int score)
-    //{
-    //    return scores.TryGetValue(tag, out score);
-    //}
+    
 
 
 
