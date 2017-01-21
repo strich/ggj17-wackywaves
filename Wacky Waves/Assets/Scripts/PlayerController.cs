@@ -70,7 +70,6 @@ public class PlayerController : MonoBehaviour
         {
             float deviation = GameUtils.GetDeviation(transform);
             float potential = Mathf.Pow(((90f - deviation) / 90f), PotentialDropOff);
-            Debug.LogFormat("[Player] From deviation {0} got potential {1}", deviation, potential);
             SetPotential(potential);
         }
     }

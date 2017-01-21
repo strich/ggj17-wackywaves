@@ -5,20 +5,23 @@ public class GrindController : MonoBehaviour
 {
     const float GRIND_WIDTH = 2f;
 
+    public Transform LeftSensor;
+    public Transform RightSensor;
+
     PlayerController _PlayerController;
     WaterTypeResolver _WaterTypeResolver;
 
     bool _Grinding;
     Buff _GrindBuff;
 
-	void Start ()
+	void Start()
     {
         _PlayerController = GetComponent<PlayerController>();
         _WaterTypeResolver = GetComponent<WaterTypeResolver>();
-        _GrindBuff = new IncreasingBuff(2f, 1.1f, 10f);
+        _GrindBuff = new IncreasingBuff(1f, 1.001f, 10f);
 	}
 	
-	void Update ()
+	void Update()
     {
         if (IsGrinding() != _Grinding)
         {
@@ -43,8 +46,8 @@ public class GrindController : MonoBehaviour
 
     bool IsGrinding()
     {
-        bool leftOverGround = GetOverGround(transform.position - transform.right * GRIND_WIDTH);
-        bool rightOverGround = GetOverGround(transform.position + transform.right * GRIND_WIDTH);
+        bool leftOverGround = GetOverGround(LeftSensor.position);
+        bool rightOverGround = GetOverGround(RightSensor.position);
 
         return (leftOverGround && !rightOverGround) ||
                 (!leftOverGround && rightOverGround);
