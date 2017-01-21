@@ -9,7 +9,9 @@ public class PlayerController : MonoBehaviour
 	public float AngleSmoothing = 2.0f;
 	public float PotentialDropOff = 2f;
 
-    [SerializeField]
+	public GameObject FollowerObjectsContainer;
+
+	[SerializeField]
     float _Rotation;
 
     //NOTE: Testing vars
@@ -69,7 +71,14 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void OnGround(StateController.State prevState)
+	public void AddFollowerPart(GameObject go)
+	{
+		go.transform.SetParent(FollowerObjectsContainer.transform, false);
+		Destroy(go.GetComponent<Collider>());
+		go.AddComponent<WaveFollower>();
+	}
+
+	void OnGround(StateController.State prevState)
     {
     }
 

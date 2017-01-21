@@ -1554,6 +1554,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LeftSensor: {fileID: 4908274167787810}
   RightSensor: {fileID: 4125795947283814}
+  _State: 0
 --- !u!114 &114889721858769128
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1565,11 +1566,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b1a9145f815c6240b33de4c12169772, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FollowerObjectsContainer: {fileID: 1429131524666472}
   ForwardSpeedModifier: 0.1
   TurnSpeed: 2
   AngleSmoothing: 2
   PotentialDropOff: 2
+  FollowerObjectsContainer: {fileID: 1429131524666472}
   _Rotation: 0
   _Potential: 0
 --- !u!136 &136765078817475566
