@@ -1,12 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class CollisionManager : MonoBehaviour
 {
 	public bool IsWave = false;
 
-	void Start () {
+	void Start ()
+	{
 		
 	}
 	
@@ -20,11 +22,14 @@ public class CollisionManager : MonoBehaviour
 		//if(collider.name.Contains("Back")) Debug.Log("We hit the back!");
 
 		// Mother of god what am i doing. Will fix...need dinner
-		collider.attachedRigidbody.transform.parent.GetComponent<NPCController>().TriggerDestroyed();
+		var npcController = collider.attachedRigidbody.transform.parent.GetComponent<NPCController>();
+		npcController.TriggerDestroyed();
 	}
 
 	void OnTriggerExit(Collider collider)
 	{
 		//Debug.Log("OnTriggerExit");
 	}
+
+	
 }
