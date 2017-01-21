@@ -1,25 +1,37 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
 	public float ForwardSpeed = 1.0f;
 	public float TurnSpeed = 30.0f;
 	public float AngleSmoothing = 2.0f;
-    private float direction;
-	void Start ()
-	{
 
-	}
-	
+    [SerializeField]
+    float _Rotation;
+
+    public Quaternion _RotationTarget = Quaternion.identity;
+
 	void Update ()
 	{
-		transform.Translate(Vector3.forward* ForwardSpeed, Space.Self);
-        direction += Input.GetAxisRaw("Horizontal");
-		Quaternion target = Quaternion.Euler(0, direction * TurnSpeed, 0);
-		transform.rotation = Quaternion.Slerp(transform.rotation, target, Time.deltaTime * AngleSmoothing);
-
+        ApplyInput();
+        Move();
 	}
+
+    void ApplyInput()
+    {
+        _Rotation += Input.GetAxisRaw("Horizontal") * TurnSpeed;
+    }
+
+    public void AddRotation(float yRotation)
+    {
+        _Rotation += yRotation;
+    }
+
+    void Move()
+    {
+		transform.Translate(Vector3.forward* ForwardSpeed, Space.Self);
+		transform.rotation = Quaternion.Slerp(transform.rotation,
+            Quaternion.Euler(0f, _Rotation, 0f),
+            Time.deltaTime * AngleSmoothing);
+    }
 }
