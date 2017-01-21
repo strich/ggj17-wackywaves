@@ -42,6 +42,8 @@ public class WaterTypeResolver : MonoBehaviour
 		if (_prevTerrainHeightPosX != (int)transform.position.x ||
 			_prevTerrainHeightPosY != (int)transform.position.z)
 		{
+			_prevTerrainHeightPosX = (int) transform.position.x;
+			_prevTerrainHeightPosY = (int) transform.position.z;
 			PrevTerrainHeight = CurrentTerrainHeight;
 		}
 
