@@ -15,7 +15,7 @@ public class NPCController : MonoBehaviour
 
 	private Terrain _currentTerrain;
 
-	public Vector3 RallyPoint;
+	public GameObject RallyPoint;
 	public float MoveRadius = 5f;
 
 	public float TargetWaitTime = 5f;
@@ -26,8 +26,11 @@ public class NPCController : MonoBehaviour
 
 	private bool _targetFound = false;
 
+	[SerializeField]
+	private bool _isDead = false;
+
 	void Start () {
-		var ray = new Ray(RallyPoint, Vector3.down);
+		var ray = new Ray(RallyPoint.transform.position, Vector3.down);
 		RaycastHit hit;
 		if (Physics.Raycast(ray, out hit, 50, LayerMask.GetMask("Ground")))
 		{
@@ -39,21 +42,25 @@ public class NPCController : MonoBehaviour
 		}
 	}
 
-	void Update () {
-		if (Time.time > _lastTargetFindTime + TargetWaitTime)
+	void Update ()
+	{
+		if (!_isDead)
 		{
-			_lastTargetFindTime = Time.time;
+			if (Time.time > _lastTargetFindTime + TargetWaitTime)
+			{
+				_lastTargetFindTime = Time.time;
 
-			FindNewMoveTarget();
+				FindNewMoveTarget();
+			}
+
+			MoveToTarget();
 		}
-
-		MoveToTarget();
 	}
 
 	private void FindNewMoveTarget()
 	{
 		var localPos = new Vector3(Random.Range(-MoveRadius, MoveRadius), 0, Random.Range(-MoveRadius, MoveRadius));
-		var worldPos = RallyPoint + localPos;
+		var worldPos = RallyPoint.transform.position + localPos;
 		var height = _currentTerrain.terrainData.GetHeight((int)worldPos.x, (int)worldPos.z);
 
 		if (height > WATER_HEIGHT_SHALLOW) return;
@@ -73,5 +80,11 @@ public class NPCController : MonoBehaviour
 		//transform.rotation = Quaternion.Slerp(transform.rotation,
 		//	Quaternion.LookRotation(transform.position), 
 		//	Time.deltaTime * AngleSmoothing);
+	}
+
+	public void TriggerDestroyed()
+	{
+		GetComponentInChildren<Rigidbody>().isKinematic = false;
+		GetComponentInChildren<Rigidbody>().useGravity = true;
 	}
 }
