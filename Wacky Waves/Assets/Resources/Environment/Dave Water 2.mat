@@ -7,18 +7,20 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: Dave Water 2
-  m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
-  m_ShaderKeywords: _EMISSION
+  m_Shader: {fileID: 45, guid: 0000000000000000f000000000000000, type: 0}
+  m_ShaderKeywords: _ALPHAPREMULTIPLY_ON _EMISSION _GLOSSYREFLECTIONS_OFF _NORMALMAP
+    _SPECGLOSSMAP _SPECULARHIGHLIGHTS_OFF
   m_LightmapFlags: 1
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
+  m_CustomRenderQueue: 3000
+  stringTagMap:
+    RenderType: Transparent
   m_SavedProperties:
     serializedVersion: 2
     m_TexEnvs:
     - first:
         name: _BumpMap
       second:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: fb6566c21f717904f83743a5a76dd0b0, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - first:
@@ -46,9 +48,27 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - first:
+        name: _Foam
+      second:
+        m_Texture: {fileID: 2800000, guid: 36dd0b22da8874ed38075789055ca664, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _FoamGradient
+      second:
+        m_Texture: {fileID: 2800000, guid: 2dd3788f8589b40bf82a92d76ffc5091, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _Fresnel
+      second:
+        m_Texture: {fileID: 2800000, guid: c6e0767b1f8c34890ac245217f4b9731, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
         name: _MainTex
       second:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 0dd806b1d20ab4a43bf0aa049663105f, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - first:
@@ -69,6 +89,30 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - first:
+        name: _ReflectionTex
+      second:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _ReflectiveColor
+      second:
+        m_Texture: {fileID: 2800000, guid: 784e6c9e2fe61334ea00c90f586799b4, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _RefractionTex
+      second:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _SpecGlossMap
+      second:
+        m_Texture: {fileID: 2800000, guid: 0dd806b1d20ab4a43bf0aa049663105f, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Floats:
     - first:
         name: _BumpScale
@@ -81,7 +125,10 @@ Material:
       second: 1
     - first:
         name: _DstBlend
-      second: 0
+      second: 10
+    - first:
+        name: _FoamStrength
+      second: 1
     - first:
         name: _GlossMapScale
       second: 1
@@ -90,25 +137,31 @@ Material:
       second: 0.5
     - first:
         name: _GlossyReflections
-      second: 1
+      second: 0
     - first:
         name: _Metallic
       second: 0
     - first:
         name: _Mode
-      second: 0
+      second: 3
     - first:
         name: _OcclusionStrength
       second: 1
     - first:
         name: _Parallax
-      second: 0.02
+      second: 0.08
+    - first:
+        name: _ReflDistort
+      second: 0.44
+    - first:
+        name: _RefrDistort
+      second: 0.4
     - first:
         name: _SmoothnessTextureChannel
       second: 0
     - first:
         name: _SpecularHighlights
-      second: 1
+      second: 0
     - first:
         name: _SrcBlend
       second: 1
@@ -116,12 +169,27 @@ Material:
         name: _UVSec
       second: 0
     - first:
+        name: _WaveScale
+      second: 0.063
+    - first:
         name: _ZWrite
-      second: 1
+      second: 0
     m_Colors:
     - first:
+        name: WaveSpeed
+      second: {r: 19, g: 9, b: -16, a: -7}
+    - first:
         name: _Color
-      second: {r: 1, g: 1, b: 1, a: 1}
+      second: {r: 0, g: 0.6755515, b: 0.77205884, a: 0.541}
     - first:
         name: _EmissionColor
       second: {r: 0, g: 0, b: 0, a: 1}
+    - first:
+        name: _HorizonColor
+      second: {r: 0.172, g: 0.463, b: 0.435, a: 1}
+    - first:
+        name: _RefrColor
+      second: {r: 0.34, g: 0.85, b: 0.92, a: 1}
+    - first:
+        name: _SpecColor
+      second: {r: 0.23137257, g: 0.32156864, b: 0.3372549, a: 1}
