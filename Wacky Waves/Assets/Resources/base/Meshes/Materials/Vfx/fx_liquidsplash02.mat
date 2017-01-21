@@ -1,0 +1,88 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: fx_liquidsplash02
+  m_Shader: {fileID: 4800000, guid: 6bd798ec0d869c148ac647de0b453c4c, type: 3}
+  m_ShaderKeywords: GLOW11_MULTIPLY_GLOWCOLOR
+  m_LightmapFlags: 5
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  m_SavedProperties:
+    serializedVersion: 2
+    m_TexEnvs:
+    - first:
+        name: _Blend_Texture
+      second:
+        m_Texture: {fileID: 2800000, guid: b6553d6a23e0b1c4a81be71b297cc4ce, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _Blend_Texture01
+      second:
+        m_Texture: {fileID: 2800000, guid: b6553d6a23e0b1c4a81be71b297cc4ce, type: 3}
+        m_Scale: {x: 0.5, y: 0.5}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _BumpMap
+      second:
+        m_Texture: {fileID: 2800000, guid: 5330c49ee2f255149b9b5cb8086818f5, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _GlowTex
+      second:
+        m_Texture: {fileID: 2800000, guid: adc550c288f092f4487daf51fb44845c, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _MainTex
+      second:
+        m_Texture: {fileID: 2800000, guid: 1a8d0504b03d9814d97bcfc2d4dd823d, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - first:
+        name: _GlowStrength
+      second: 4
+    - first:
+        name: _InvFade
+      second: 1
+    - first:
+        name: _Lighten
+      second: 2
+    - first:
+        name: _LightenMain
+      second: 2.5
+    - first:
+        name: _Speed01
+      second: 0
+    - first:
+        name: _Speed02
+      second: 0
+    m_Colors:
+    - first:
+        name: _Color
+      second: {r: 0.5882353, g: 0.5882353, b: 0.5882353, a: 1}
+    - first:
+        name: _Color01
+      second: {r: 1, g: 1, b: 1, a: 1}
+    - first:
+        name: _Color02
+      second: {r: 0.99607843, g: 0.99607843, b: 0.99607843, a: 1}
+    - first:
+        name: _Color03
+      second: {r: 1, g: 1, b: 1, a: 1}
+    - first:
+        name: _GlowColor
+      second: {r: 1, g: 0.94155097, b: 0.58208954, a: 1}
+    - first:
+        name: _TintColor
+      second: {r: 0.91791046, g: 0.85257125, b: 0.70555806, a: 1}
+--- !u!1002 &2100001
+EditorExtensionImpl:
+  serializedVersion: 6
