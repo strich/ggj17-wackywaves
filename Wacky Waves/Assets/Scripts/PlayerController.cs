@@ -42,7 +42,7 @@ public class PlayerController : MonoBehaviour
 
     void OnWaterTypeChanged(WaterType waterType)
     {
-        _BuffManager.Wipe(BuffManager.KEY_SPEED);
+        _BuffManager.Wipe(BuffManager.KEY_LOCAL_SPEED);
 
         switch (waterType)
         {
@@ -77,7 +77,7 @@ public class PlayerController : MonoBehaviour
 
     void OnDeep()
     {
-        _BuffManager.AddBuff(BuffManager.KEY_SPEED, new DecreasingBuff(_Potential * GameUtils.POTENTIAL_MODIFIER, 0.99f));
+        _BuffManager.AddBuff(BuffManager.KEY_LOCAL_SPEED, new DecreasingBuff(_Potential * GameUtils.POTENTIAL_MODIFIER, 0.99f));
         SetPotential(0f);
         UpdateView();
     }
@@ -90,6 +90,16 @@ public class PlayerController : MonoBehaviour
     public void AddRotation(float yRotation)
     {
         _Rotation += yRotation;
+    }
+
+    public void AddBuff(string key, Buff buff)
+    {
+        _BuffManager.AddBuff(key, buff);
+    }
+
+    public void RemoveBuff(string key, Buff buff)
+    {
+        _BuffManager.RemoveBuff(key, buff);
     }
 
     void Move()
@@ -113,6 +123,6 @@ public class PlayerController : MonoBehaviour
 
     float GetForwardSpeed()
     {
-        return ForwardSpeedModifier * _BuffManager.Modify(BuffManager.KEY_SPEED, GameUtils.GetTerrainSpeed(_CurrentWaterType));
+        return ForwardSpeedModifier * _BuffManager.Modify(BuffManager.KEY_GLOBAL_SPEED, _BuffManager.Modify(BuffManager.KEY_LOCAL_SPEED, GameUtils.GetTerrainSpeed(_CurrentWaterType)));
     }
 }
