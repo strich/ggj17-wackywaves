@@ -7,7 +7,9 @@ public static class GameUtils
     const float STEP_BACK = 1f;
 
     const float WATER_SPEED_DEEP = 1.5f;
+    const float WATER_SPEED_WET_GRIND = 1.4f;
     const float WATER_SPEED_SHALLOW = 1f;
+    const float WATER_SPEED_DRY_GRIND = 0.9f;
     const float WATER_SPEED_GROUND = 0.5f;
 
     static Transform _Transform;
@@ -35,15 +37,19 @@ public static class GameUtils
         return Vector2.Angle(forward, collapsedNormal);
     }
 
-    public static float GetTerrainSpeed(WaterType _CurrentWaterType)
+    public static float GetStateSpeed(StateController.State state)
     {
-        switch (_CurrentWaterType)
+        switch (state)
         {
-            case WaterType.Deep:
+            case StateController.State.DEEP:
                 return WATER_SPEED_DEEP;
-            case WaterType.Shallow:
+            case StateController.State.WET_GRIND:
+                return WATER_SPEED_WET_GRIND;
+            case StateController.State.SHALLOW:
                 return WATER_SPEED_SHALLOW;
-            case WaterType.Ground:
+            case StateController.State.DRY_GRIND:
+                return WATER_SPEED_DRY_GRIND;
+            case StateController.State.GROUND:
                 return WATER_SPEED_GROUND;
         }
 

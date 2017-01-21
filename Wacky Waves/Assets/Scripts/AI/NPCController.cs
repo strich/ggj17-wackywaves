@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -29,7 +30,11 @@ public class NPCController : MonoBehaviour
 	[SerializeField]
 	private bool _isDead = false;
 
+	private PlayerController _player;
+
 	void Start () {
+		_player = GameObject.Find("Player").GetComponent<PlayerController>();
+
 		var ray = new Ray(RallyPoint.transform.position, Vector3.down);
 		RaycastHit hit;
 		if (Physics.Raycast(ray, out hit, 50, LayerMask.GetMask("Ground")))
@@ -84,7 +89,20 @@ public class NPCController : MonoBehaviour
 
 	public void TriggerDestroyed()
 	{
-		GetComponentInChildren<Rigidbody>().isKinematic = false;
-		GetComponentInChildren<Rigidbody>().useGravity = true;
+		if (_isDead) return;
+
+		_isDead = true;
+		//GetComponentInChildren<Rigidbody>().isKinematic = false;
+		//GetComponentInChildren<Rigidbody>().useGravity = true;
+		ConsumeBrokenParts(GetComponentsInChildren<Collider>().Select(c => c.gameObject).ToList()); // Such hax
+		Destroy(gameObject, 10f);
+	}
+
+	private void ConsumeBrokenParts(List<GameObject> gos)
+	{
+		foreach (var go in gos)
+		{
+			_player.AddFollowerPart(go);
+		}
 	}
 }

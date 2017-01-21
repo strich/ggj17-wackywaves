@@ -14,38 +14,40 @@ public class AmbAudioController : MonoBehaviour
 	public AudioSource SourceB;
 
 	private GameObject _player;
-	private WaterTypeResolver _resolver;
+    StateController _StateController;
 
 	static Random rnd = new Random();
 
 	void Start () {
 		_player = GameObject.Find("Player");
-		_resolver = _player.GetComponent<WaterTypeResolver>();
-		_resolver.OnWaterTypeChanged += OnWaterTypeChanged;
+		_StateController = _player.GetComponent<StateController>();
+		_StateController.OnStateChanged += OnStateChanged;
 	}
 
 	void OnDestroy()
 	{
-		_player.GetComponent<WaterTypeResolver>().OnWaterTypeChanged -= OnWaterTypeChanged;
+		_StateController.OnStateChanged -= OnStateChanged;
 	}
 
-	private void OnWaterTypeChanged(WaterType waterType)
-	{
-		switch (waterType)
+    void OnStateChanged(StateController.State currentState, StateController.State prevState)
+    {
+		switch (currentState)
 		{
-			case WaterType.None:
-				break;
-			case WaterType.Deep:
-				ChangeClip(DeepAudioClips[rnd.Next(DeepAudioClips.Count)]);
-				break;
-			case WaterType.Shallow:
+            case StateController.State.DEEP:
+                ChangeClip(DeepAudioClips[rnd.Next(DeepAudioClips.Count)]);
+                break;
+            case StateController.State.WET_GRIND:
+                break;
+            case StateController.State.SHALLOW:
 				ChangeClip(ShallowAudioClips[rnd.Next(ShallowAudioClips.Count)]);
-				break;
-			case WaterType.Ground:
+                break;
+            case StateController.State.DRY_GRIND:
+                break;
+            case StateController.State.GROUND:
 				ChangeClip(GroundAudioClips[rnd.Next(GroundAudioClips.Count)]);
-				break;
+                break;
 			default:
-				throw new ArgumentOutOfRangeException("waterType", waterType, null);
+				throw new ArgumentOutOfRangeException("state", currentState, null);
 		}
 	}
 
