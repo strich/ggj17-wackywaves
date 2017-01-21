@@ -96,7 +96,7 @@ Material:
     - first:
         name: _ShoreTex
       second:
-        m_Texture: {fileID: 2800000, guid: 36dd0b22da8874ed38075789055ca664, type: 3}
+        m_Texture: {fileID: 2800000, guid: a935f53f445225b4cad2a9cfc22e9f4e, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 1, y: 1}
     - first:
@@ -156,7 +156,7 @@ Material:
       second: 1.7931035
     - first:
         name: _FresnelScale
-      second: 0.6571428
+      second: 1.6
     - first:
         name: _GerstnerIntensity
       second: 1.6714286
@@ -183,7 +183,7 @@ Material:
       second: 1.4393286
     - first:
         name: _Shininess
-      second: 313.21838
+      second: 102
     - first:
         name: _ShoreTiling
       second: 56.862743
@@ -214,7 +214,7 @@ Material:
       second: {r: 0.04582553, g: 0.0182, b: 0.045714468, a: 0.027129691}
     - first:
         name: _BaseColor
-      second: {r: 0.15370905, g: 0.26813015, b: 0.29850745, a: 0.82}
+      second: {r: 0, g: 0.27682555, b: 0.3897059, a: 0.945}
     - first:
         name: _BumpDirection
       second: {r: 40, g: 40, b: 40, a: -40}
@@ -247,7 +247,7 @@ Material:
       second: {r: 4.5, g: 75, b: 300, a: 1}
     - first:
         name: _Foam
-      second: {r: 0.42666668, g: 0.48666668, b: 0, a: 0}
+      second: {r: 0.61, g: 0.48666668, b: 0, a: 0}
     - first:
         name: _FoamWaveParams
       second: {r: 0, g: 0.24918434, b: 3.3395782, a: 1}
@@ -316,7 +316,7 @@ Material:
       second: {r: 1, g: 1, b: 0.1, a: 0.1}
     - first:
         name: _SpecularColor
-      second: {r: 0.91791046, g: 0.91791046, b: 0.91791046, a: 1}
+      second: {r: 1, g: 1, b: 1, a: 1}
     - first:
         name: _UnderwaterColor
       second: {r: 0.6950323, g: 0.89552236, b: 0.7502397, a: 1}
