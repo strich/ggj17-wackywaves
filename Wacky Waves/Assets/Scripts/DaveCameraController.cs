@@ -10,7 +10,7 @@ public class DaveCameraController : MonoBehaviour
     public Vector3 CameraOffset = new Vector3(0f,20f,-10f);
     void Start ()
 	{
-		_player = GameObject.Find("Dave Player");
+		_player = GameObject.Find("Player");
 
 		transform.position = new Vector3(
 			_player.transform.position.x+ CameraOffset.x, 

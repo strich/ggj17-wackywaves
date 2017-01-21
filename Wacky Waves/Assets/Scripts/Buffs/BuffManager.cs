@@ -35,7 +35,7 @@ public class BuffManager : MonoBehaviour
     {
         if (!_Buffs.ContainsKey(key))
         {
-            Debug.LogErrorFormat("No buff with key {0}", key);
+            Debug.LogFormat("No buff with key {0}", key);
             _Buffs.Add(key, new List<Buff>());
         }
 
@@ -46,7 +46,7 @@ public class BuffManager : MonoBehaviour
     {
         if (!_Buffs.ContainsKey(key))
         {
-            Debug.LogErrorFormat("No buff with key {0}", key);
+            Debug.LogFormat("No buff with key {0}", key);
         }
         else
         {

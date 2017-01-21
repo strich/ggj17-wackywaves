@@ -48,7 +48,7 @@ public class WaterTypeResolver : MonoBehaviour
 			PrevTerrainHeight = CurrentTerrainHeight;
 		}
 
-		CurrentTerrainHeight = _currentTerrain.terrainData.GetHeight((int) transform.position.x, (int) transform.position.z);
+        CurrentTerrainHeight = GetTerrainHeightAt(transform.position);
 
 		var wt = FindWaterType();
 		if (wt != CurrentWaterType)
@@ -77,8 +77,16 @@ public class WaterTypeResolver : MonoBehaviour
 
     public WaterType GetWaterTypeAt(Vector3 position)
     {
-		return FindWaterType(_currentTerrain.terrainData.GetHeight((int) position.x, (int) position.z));
+		return FindWaterType(GetTerrainHeightAt(position));
     }
+
+    public float GetTerrainHeightAt(Vector3 position)
+    {
+        return _currentTerrain.terrainData.GetHeight(
+            (int) (position.x / _currentTerrain.terrainData.heightmapScale.x),
+            (int) (position.z / _currentTerrain.terrainData.heightmapScale.z));
+    }
+
 }
 
 public enum WaterType
