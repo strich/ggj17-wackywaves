@@ -14,6 +14,7 @@ public class DirectionModifier : MonoBehaviour {
     void Awake()
     {
         _WaterTypeResolver = GetComponent<WaterTypeResolver>();
+        _WaterTypeResolver.OnWaterTypeChanged += OnWaterTypeChanged;
     }
 
     void Update()
@@ -22,6 +23,16 @@ public class DirectionModifier : MonoBehaviour {
         {
             CheckWave();
         }
+    }
+
+    void OnDestroy()
+    {
+        _WaterTypeResolver.OnWaterTypeChanged -= OnWaterTypeChanged;
+    }
+
+    void OnWaterTypeChanged(WaterType waterType)
+    {
+        CheckWave();
     }
 
     void CheckWave()

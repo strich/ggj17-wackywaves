@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class WaterTypeResolver : MonoBehaviour
 {
+    public delegate void WaterTypeHandler(WaterType waterType);
+    public event WaterTypeHandler OnWaterTypeChanged;
+
 	private Terrain _currentTerrain;
 	public float CurrentTerrainHeight;
 	private int _prevTerrainHeightPosX;
@@ -47,6 +50,11 @@ public class WaterTypeResolver : MonoBehaviour
 		{
 			PrevWaterType = CurrentWaterType;
 			CurrentWaterType = wt;
+
+            if (OnWaterTypeChanged != null)
+            {
+                OnWaterTypeChanged(CurrentWaterType);
+            }
 		}
 	}
 

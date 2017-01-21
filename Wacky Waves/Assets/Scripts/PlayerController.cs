@@ -20,6 +20,5 @@ public class PlayerController : MonoBehaviour
         direction += Input.GetAxisRaw("Horizontal");
 		Quaternion target = Quaternion.Euler(0, direction * TurnSpeed, 0);
 		transform.rotation = Quaternion.Slerp(transform.rotation, target, Time.deltaTime * AngleSmoothing);
-
 	}
 }
