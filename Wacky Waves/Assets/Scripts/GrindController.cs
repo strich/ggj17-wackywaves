@@ -19,8 +19,8 @@ public class GrindController : MonoBehaviour
     {
         _PlayerController = GetComponent<PlayerController>();
         _WaterTypeResolver = GetComponent<WaterTypeResolver>();
-        _GrindBuff = new IncreasingBuff(1f, 1.005f, 2f);
-        _OffGrindBuff = new DecreasingBuff(1f, 0.99f);
+        _GrindBuff = new IncreasingBuff(1f, 1.005f, 5f);
+        _OffGrindBuff = new DecreasingBuff(1f, 0.98f);
 	}
 	
 	void Update()
@@ -55,8 +55,9 @@ public class GrindController : MonoBehaviour
         bool leftOverGround = GetOverGround(LeftSensor.position);
         bool rightOverGround = GetOverGround(RightSensor.position);
 
-        return (leftOverGround && !rightOverGround) ||
-                (!leftOverGround && rightOverGround);
+        return ((leftOverGround && !rightOverGround) ||
+                (!leftOverGround && rightOverGround)) &&
+                _WaterTypeResolver.CurrentWaterType == WaterType.Shallow;
     }
 
     bool GetOverGround(Vector3 position)
