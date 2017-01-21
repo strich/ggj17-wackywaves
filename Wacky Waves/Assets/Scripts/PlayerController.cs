@@ -77,7 +77,7 @@ public class PlayerController : MonoBehaviour
 
     void OnDeep()
     {
-        _BuffManager.AddBuff(BuffManager.KEY_SPEED, new DecreasingBuff(_Potential * 15f, 0.8f));
+        _BuffManager.AddBuff(BuffManager.KEY_SPEED, new DecreasingBuff(_Potential * GameUtils.POTENTIAL_MODIFIER, 0.99f));
         SetPotential(0f);
         UpdateView();
     }
