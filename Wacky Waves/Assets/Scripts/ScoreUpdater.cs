@@ -18,6 +18,7 @@ public class ScoreUpdater : MonoBehaviour {
         //ScoreManager.Instance.ScoreHandlers += UpdateScore;
         // get instance of  ScoreManager
         // register our delegate as a handler for score update
+        ScoreManager.Instance.ScoreHandlers += UpdateScore;
     }
 
     // Update is called once per frame

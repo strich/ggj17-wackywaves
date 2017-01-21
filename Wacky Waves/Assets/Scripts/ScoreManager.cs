@@ -14,7 +14,15 @@ public class ScoreManager : MonoBehaviour {
     public static readonly string Clicked = "Clicked";
 
     private static ScoreManager instance;
-    public static ScoreManager Instance { get { return instance; } private set { instance = value; } }
+    public static ScoreManager Instance {
+        get {
+            if (!instance)
+
+            {
+                instance = new GameObject("ScoreManager").AddComponent<ScoreManager>();
+            }
+            return instance  ;
+        } private set { instance = value; } }
     
     public delegate void ScoreHandler(int points, string tag);
     public event ScoreHandler ScoreHandlers;
@@ -25,7 +33,15 @@ public class ScoreManager : MonoBehaviour {
 
     void Awake ()
     {
-        instance = this;
+        if (!instance)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(this);
+        }
         scores = new Dictionary<string, int>();
     }
 
