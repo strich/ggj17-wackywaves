@@ -4,10 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class ScoreUpdater : MonoBehaviour {
-
-  
-
-
     private int score = 0;
     public int Score { get { return score; } private set { score = value; } }
 
@@ -19,7 +15,7 @@ public class ScoreUpdater : MonoBehaviour {
 
     // Use this for initialization
     void Start() {
-        ScoreManager.Instance.ScoreHandlers += UpdateScore;
+        //ScoreManager.Instance.ScoreHandlers += UpdateScore;
         // get instance of  ScoreManager
         // register our delegate as a handler for score update
     }

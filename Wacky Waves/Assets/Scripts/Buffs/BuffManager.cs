@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class BuffManager : MonoBehaviour
 {
-    public const string KEY_SPEED = "KEY_SPEED";
+    public const string KEY_LOCAL_SPEED = "KEY_LOCAL_SPEED";
+    public const string KEY_GLOBAL_SPEED = "KEY_GLOBAL_SPEED";
 
     public Dictionary<string, List<Buff>> _Buffs = new Dictionary<string, List<Buff>>();
 
@@ -18,24 +19,34 @@ public class BuffManager : MonoBehaviour
         _Buffs[key].Add(buff);
     }
 
-    public float Modify(string key, float value)
+    public void RemoveBuff(string key, Buff buff)
     {
         if (!_Buffs.ContainsKey(key))
         {
             Debug.LogErrorFormat("No buff with key {0}", key);
-            return 1f;
         }
         else
         {
-            return Modify(_Buffs[key], value);
+            _Buffs[key].Remove(buff);
         }
+    }
+
+    public float Modify(string key, float value)
+    {
+        if (!_Buffs.ContainsKey(key))
+        {
+            Debug.LogFormat("No buff with key {0}", key);
+            _Buffs.Add(key, new List<Buff>());
+        }
+
+        return Modify(_Buffs[key], value);
     }
 
     public void Wipe(string key)
     {
         if (!_Buffs.ContainsKey(key))
         {
-            Debug.LogErrorFormat("No buff with key {0}", key);
+            Debug.LogFormat("No buff with key {0}", key);
         }
         else
         {

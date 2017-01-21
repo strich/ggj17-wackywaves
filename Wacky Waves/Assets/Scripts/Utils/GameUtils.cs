@@ -2,9 +2,11 @@
 
 public static class GameUtils
 {
+    public const float POTENTIAL_MODIFIER = 5f;
+
     const float STEP_BACK = 1f;
 
-    const float WATER_SPEED_DEEP = 2f;
+    const float WATER_SPEED_DEEP = 1.5f;
     const float WATER_SPEED_SHALLOW = 1f;
     const float WATER_SPEED_GROUND = 0.5f;
 
