@@ -6,8 +6,18 @@ public class WaterTypeResolver : MonoBehaviour
 {
 	private Terrain _currentTerrain;
 	public float CurrentTerrainHeight;
+	private int _prevTerrainHeightPosX;
+	private int _prevTerrainHeightPosY;
+	public float PrevTerrainHeight;
+	public Dictionary<WaterType, float> WaterTypeRanges = new Dictionary<WaterType, float>();
+	public WaterType PrevWaterType; 
+	public WaterType CurrentWaterType = WaterType.None; 
 
 	void Start () {
+		WaterTypeRanges.Add(WaterType.Deep,		20); // 0 to 20
+		WaterTypeRanges.Add(WaterType.Shallow,	23); // 22 to 23
+		//WaterTypeRanges.Add(WaterType.Ground,	23); // 23 to infin
+
 		var ray = new Ray(transform.position, transform.TransformDirection(Vector3.down));
 		RaycastHit hit;
 		if (Physics.Raycast(ray, out hit, 50, LayerMask.GetMask("Ground")))
@@ -22,6 +32,36 @@ public class WaterTypeResolver : MonoBehaviour
 	
 	void Update ()
 	{
+		// Store last height
+		if (_prevTerrainHeightPosX != (int)transform.position.x ||
+			_prevTerrainHeightPosY != (int)transform.position.z)
+		{
+			PrevTerrainHeight = CurrentTerrainHeight;
+		}
+
 		CurrentTerrainHeight = _currentTerrain.terrainData.GetHeight((int) transform.position.x, (int) transform.position.z);
+
+
+		var wt = FindWaterType();
+		if (wt != CurrentWaterType)
+		{
+			PrevWaterType = CurrentWaterType;
+			CurrentWaterType = wt;
+		}
 	}
+
+	public WaterType FindWaterType()
+	{
+		if(CurrentTerrainHeight <= WaterTypeRanges[WaterType.Deep]) return WaterType.Deep;
+		if(CurrentTerrainHeight <= WaterTypeRanges[WaterType.Shallow]) return WaterType.Shallow;
+		return WaterType.Ground;
+	}
+}
+
+public enum WaterType
+{
+	None,
+	Deep,
+	Shallow,
+	Ground
 }
