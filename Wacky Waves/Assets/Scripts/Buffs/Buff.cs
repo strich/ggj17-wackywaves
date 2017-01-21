@@ -1,11 +1,20 @@
-﻿using System;
-using UnityEngine;
-
-public class Buff
+﻿public class Buff
 {
     protected float _Modifier;
+    public float Modifier
+    {
+        get
+        {
+            return _Modifier;
+        }
+    }
 
     public Buff(float modifier)
+    {
+        _Modifier = modifier;
+    }
+
+    public void SetModifier(float modifier)
     {
         _Modifier = modifier;
     }

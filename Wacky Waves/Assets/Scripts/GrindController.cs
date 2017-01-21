@@ -13,12 +13,14 @@ public class GrindController : MonoBehaviour
 
     bool _Grinding;
     Buff _GrindBuff;
+    Buff _OffGrindBuff;
 
 	void Start()
     {
         _PlayerController = GetComponent<PlayerController>();
         _WaterTypeResolver = GetComponent<WaterTypeResolver>();
-        _GrindBuff = new IncreasingBuff(1f, 1.001f, 10f);
+        _GrindBuff = new IncreasingBuff(1f, 1.005f, 2f);
+        _OffGrindBuff = new DecreasingBuff(1f, 0.99f);
 	}
 	
 	void Update()
@@ -34,10 +36,14 @@ public class GrindController : MonoBehaviour
     {
         if (_Grinding)
         {
+            _GrindBuff.SetModifier(1f);
             _PlayerController.AddBuff(BuffManager.KEY_GLOBAL_SPEED, _GrindBuff);
+            _PlayerController.RemoveBuff(BuffManager.KEY_GLOBAL_SPEED, _OffGrindBuff);
         }
         else
         {
+            _OffGrindBuff.SetModifier(_GrindBuff.Modifier);
+            _PlayerController.AddBuff(BuffManager.KEY_GLOBAL_SPEED, _OffGrindBuff);
             _PlayerController.RemoveBuff(BuffManager.KEY_GLOBAL_SPEED, _GrindBuff);
         }
 

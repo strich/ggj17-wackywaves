@@ -2,7 +2,7 @@
 
 public static class GameUtils
 {
-    public const float POTENTIAL_MODIFIER = 5f;
+    public const float POTENTIAL_MODIFIER = 4f;
 
     const float STEP_BACK = 1f;
 

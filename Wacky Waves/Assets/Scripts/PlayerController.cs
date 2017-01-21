@@ -14,8 +14,6 @@ public class PlayerController : MonoBehaviour
 
     //NOTE: Testing vars
     [SerializeField]
-    float _Speed;
-    [SerializeField]
     float _Potential; //range 0 to 1
 
     BuffManager _BuffManager;
