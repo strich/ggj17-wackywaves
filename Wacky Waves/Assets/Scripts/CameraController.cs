@@ -6,6 +6,7 @@ public class CameraController : MonoBehaviour
 {
 	private GameObject _player;
 	public float RotateFollowSmoothing = 1.0f;
+	public float CameraHeightDistance = 20f;
 
 	void Start ()
 	{
@@ -13,7 +14,7 @@ public class CameraController : MonoBehaviour
 
 		transform.position = new Vector3(
 			_player.transform.position.x, 
-			_player.transform.position.y + 10, 
+			_player.transform.position.y + CameraHeightDistance, 
 			_player.transform.position.z);
 
 		transform.rotation = Quaternion.Euler(
@@ -26,7 +27,7 @@ public class CameraController : MonoBehaviour
 	{
 		transform.position = new Vector3(
 			_player.transform.position.x,
-			_player.transform.position.y + 10,
+			_player.transform.position.y + CameraHeightDistance,
 			_player.transform.position.z);
 
 		transform.rotation = Quaternion.Slerp(
