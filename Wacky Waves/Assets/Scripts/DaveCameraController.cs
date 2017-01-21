@@ -10,7 +10,7 @@ public class DaveCameraController : MonoBehaviour
     public Vector3 CameraOffset = new Vector3(0f,20f,-10f);
     void Start ()
 	{
-		_player = GameObject.Find("Dave Player");
+		_player = GameObject.Find("Player");
 
 		transform.position = new Vector3(
 			_player.transform.position.x+ CameraOffset.x, 
@@ -30,11 +30,11 @@ public class DaveCameraController : MonoBehaviour
 			_player.transform.position.y + CameraOffset.y,
 			_player.transform.position.z+ CameraOffset.z);
 
-		transform.rotation = Quaternion.Slerp(
-			transform.rotation,
-			Quaternion.Euler(CameraAngle,
-				_player.transform.rotation.y,
-				_player.transform.rotation.z),
-			Time.deltaTime * RotateFollowSmoothing);
+		//transform.rotation = Quaternion.Slerp(
+		//	transform.rotation,
+		//	Quaternion.Euler(CameraAngle,
+		//		_player.transform.rotation.y,
+		//		_player.transform.rotation.z),
+		//	Time.deltaTime * RotateFollowSmoothing);
 	}
 }
