@@ -8,9 +8,6 @@ public class WaterTypeResolver : MonoBehaviour
     public const float WATER_HEIGHT_SHALLOW = 23; // 22 to 23
     public const float WATER_HEIGHT_GROUND = 25; // 24 to 25
 
-    public delegate void WaterTypeHandler(WaterType waterType);
-    public event WaterTypeHandler OnWaterTypeChanged;
-
 	private Terrain _currentTerrain;
 	public float CurrentTerrainHeight;
 	private int _prevTerrainHeightPosX;
@@ -55,11 +52,6 @@ public class WaterTypeResolver : MonoBehaviour
 		{
 			PrevWaterType = CurrentWaterType;
 			CurrentWaterType = wt;
-
-            if (OnWaterTypeChanged != null)
-            {
-                OnWaterTypeChanged(CurrentWaterType);
-            }
 		}
 	}
 

@@ -34,7 +34,7 @@ public class ScoreUpdater : MonoBehaviour {
 
     void OnDestroy()
     {
-        ScoreManager.Instance.ScoreHandlers -= UpdateScore;
+        //ScoreManager.Instance.ScoreHandlers -= UpdateScore;
     }
 
     public void DelegateScoreUpdate(int points)

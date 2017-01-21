@@ -10,32 +10,36 @@ public class WaveRampUpDown : MonoBehaviour
 	public WaterTypeTransition CurrentWaterTypeTransition;
 	public WaterTypeTransition NextWaterTypeTransition;
 
+    StateController _StateController;
+
 	void Start ()
 	{
-		_resolver = gameObject.GetComponent<WaterTypeResolver>();
-		_resolver.OnWaterTypeChanged += OnWaterTypeChanged;
+		_StateController = GetComponent<StateController>();
+		_StateController.OnStateChanged += OnStateChanged;
 	}
 
 	void OnDestroy()
 	{
-		_resolver.OnWaterTypeChanged -= OnWaterTypeChanged;
+		_StateController.OnStateChanged -= OnStateChanged;
 	}
 
-	private void OnWaterTypeChanged(WaterType waterType)
-	{
-		switch (_resolver.PrevWaterType)
+    void OnStateChanged(StateController.State currentState, StateController.State prevState)
+    {
+		switch (currentState)
 		{
-			case WaterType.None:
-				break;
-			case WaterType.Deep:
+            case StateController.State.DEEP:
 				if(_resolver.CurrentWaterType == WaterType.Shallow) NextWaterTypeTransition = WaterTypeTransition.DeepToShallow;
 				if(_resolver.CurrentWaterType == WaterType.Ground)	NextWaterTypeTransition = WaterTypeTransition.DeepToGround;
 				break;
-			case WaterType.Shallow:
+            case StateController.State.WET_GRIND:
+                break;
+            case StateController.State.SHALLOW:
 				if (_resolver.CurrentWaterType == WaterType.Deep) NextWaterTypeTransition = WaterTypeTransition.ShallowToDeep;
 				if (_resolver.CurrentWaterType == WaterType.Ground) NextWaterTypeTransition = WaterTypeTransition.ShallowToGround;
 				break;
-			case WaterType.Ground:
+            case StateController.State.DRY_GRIND:
+                break;
+            case StateController.State.GROUND:
 				if (_resolver.CurrentWaterType == WaterType.Deep) NextWaterTypeTransition = WaterTypeTransition.GroundToDeep;
 				if (_resolver.CurrentWaterType == WaterType.Shallow) NextWaterTypeTransition = WaterTypeTransition.GroundToShallow;
 				break;

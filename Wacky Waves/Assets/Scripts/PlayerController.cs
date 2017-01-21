@@ -18,13 +18,20 @@ public class PlayerController : MonoBehaviour
 
     BuffManager _BuffManager;
     WaterTypeResolver _WaterTypeResolver;
-    WaterType _CurrentWaterType;
+    StateController _StateController;
+
+    /* Buffs */
+    Buff _GrindBuff;
+    Buff _OffGrindBuff;
 
     void Awake()
     {
         _BuffManager = gameObject.AddComponent<BuffManager>();
         _WaterTypeResolver = GetComponent<WaterTypeResolver>();
-        _WaterTypeResolver.OnWaterTypeChanged += OnWaterTypeChanged;
+        _StateController = GetComponent<StateController>();
+        _StateController.OnStateChanged += OnStateChanged;
+
+        CreateBuffs();
     }
 
     void Update ()
@@ -35,53 +42,66 @@ public class PlayerController : MonoBehaviour
 
     void OnDestroy()
     {
-        _WaterTypeResolver.OnWaterTypeChanged -= OnWaterTypeChanged;
+        _StateController.OnStateChanged -= OnStateChanged;
     }
 
-    void OnWaterTypeChanged(WaterType waterType)
+    void OnStateChanged(StateController.State currentState, StateController.State prevState)
     {
         _BuffManager.Wipe(BuffManager.KEY_LOCAL_SPEED);
 
-        switch (waterType)
+        switch (currentState)
         {
-            case WaterType.Deep:
-                OnDeep();
+            case StateController.State.DEEP:
+                OnDeep(prevState);
                 break;
-            case WaterType.Shallow:
-                OnShallow();
+            case StateController.State.WET_GRIND:
+                OnWetGrind(prevState);
                 break;
-            case WaterType.Ground:
-                OnGround();
+            case StateController.State.SHALLOW:
+                OnShallow(prevState);
                 break;
-        }
-
-        _CurrentWaterType = waterType;
-    }
-
-    void OnGround()
-    {
-    }
-
-    void OnShallow()
-    {
-        if (_CurrentWaterType == WaterType.Deep)
-        {
-            float deviation = GameUtils.GetDeviation(transform);
-            float potential = Mathf.Pow(((90f - deviation) / 90f), PotentialDropOff);
-            SetPotential(potential);
+            case StateController.State.DRY_GRIND:
+                OnWetGrind(prevState);
+                break;
+            case StateController.State.GROUND:
+                OnGround(prevState);
+                break;
         }
     }
 
-    void OnDeep()
+    void OnGround(StateController.State prevState)
+    {
+    }
+
+    void OnDryGrind(StateController.State prevState)
+    {
+        _GrindBuff.SetModifier(1f);
+        AddBuff(BuffManager.KEY_GLOBAL_SPEED, _GrindBuff);
+        RemoveBuff(BuffManager.KEY_GLOBAL_SPEED, _OffGrindBuff);
+    }
+
+    void OnShallow(StateController.State prevState)
+    {
+        if (prevState == StateController.State.DRY_GRIND)
+        {
+            _OffGrindBuff.SetModifier(_GrindBuff.Modifier);
+            AddBuff(BuffManager.KEY_GLOBAL_SPEED, _OffGrindBuff);
+            RemoveBuff(BuffManager.KEY_GLOBAL_SPEED, _GrindBuff);
+        }
+        else if (prevState == StateController.State.WET_GRIND)
+        {
+        }
+    }
+
+    void OnWetGrind(StateController.State prevState)
+    {
+    }
+
+    void OnDeep(StateController.State prevState)
     {
         _BuffManager.AddBuff(BuffManager.KEY_LOCAL_SPEED, new DecreasingBuff(_Potential * GameUtils.POTENTIAL_MODIFIER, 0.99f));
         SetPotential(0f);
         UpdateView();
-    }
-
-    void ApplyInput()
-    {
-        _Rotation += Input.GetAxisRaw("Horizontal") * TurnSpeed;
     }
 
     public void AddRotation(float yRotation)
@@ -97,6 +117,22 @@ public class PlayerController : MonoBehaviour
     public void RemoveBuff(string key, Buff buff)
     {
         _BuffManager.RemoveBuff(key, buff);
+    }
+
+    void ApplyInput()
+    {
+        _Rotation += Input.GetAxisRaw("Horizontal") * TurnSpeed;
+    }
+
+    void CreateBuffs()
+    {
+        _GrindBuff = new IncreasingBuff(1f, 1.005f, 5f);
+        _OffGrindBuff = new DecreasingBuff(1f, 0.98f);
+    }
+
+    float GetForwardSpeed()
+    {
+        return ForwardSpeedModifier * _BuffManager.Modify(BuffManager.KEY_GLOBAL_SPEED, _BuffManager.Modify(BuffManager.KEY_LOCAL_SPEED, GameUtils.GetStateSpeed(_StateController.CurrentState)));
     }
 
     void Move()
@@ -116,10 +152,5 @@ public class PlayerController : MonoBehaviour
     void UpdateView()
     {
         transform.localScale = Vector3.one + Vector3.one * _Potential;
-    }
-
-    float GetForwardSpeed()
-    {
-        return ForwardSpeedModifier * _BuffManager.Modify(BuffManager.KEY_GLOBAL_SPEED, _BuffManager.Modify(BuffManager.KEY_LOCAL_SPEED, GameUtils.GetTerrainSpeed(_CurrentWaterType)));
     }
 }
