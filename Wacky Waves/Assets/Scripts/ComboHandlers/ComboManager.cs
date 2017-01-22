@@ -56,9 +56,20 @@ public class ComboManager : MonoBehaviour {
 
     void Awake()
     {
+        if (!instance)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(this);
+        }
         comboElements = new Dictionary<string, ComboElement>();
         CurrentCombo = new Dictionary<string, int>();
     }
+
+   
     // Use this for initialization
     void Start () {
         ResetCombo();

@@ -27,6 +27,13 @@ public class NPCController : MonoBehaviour
 
 	private bool _targetFound = false;
 
+
+    public string ComboElementName = "NPC Combo";
+    public int ComboElementPoints = 1;
+    public int ComboElementMultiplier = 1;
+    public ComboManager.ComboElement ComboElement;
+
+
 	[SerializeField]
 	private bool _isDead = false;
 
@@ -64,6 +71,13 @@ public class NPCController : MonoBehaviour
 			                          Vector3.Distance(transform.position, _backNForthMaxPoint) 
 									  ? _backNForthMinPoint : _backNForthMaxPoint;
 		}
+
+        // Setup Combo Element for NPC
+        ComboElement = new ComboManager.ComboElement();
+        ComboElement.Name = ComboElementName;
+        ComboElement.Multiplier = ComboElementMultiplier;
+        ComboElement.Points = ComboElementPoints;
+        ComboManager.Instance.CreateComboElement(ComboElement);
 	}
 
 	void Update ()
@@ -133,6 +147,10 @@ public class NPCController : MonoBehaviour
 		if (_isDead) return;
 
 		_isDead = true;
+
+        // CallComboManager
+        ComboManager.Instance.AddComboElement(ComboElementName);
+
 		//GetComponentInChildren<Rigidbody>().isKinematic = false;
 		//GetComponentInChildren<Rigidbody>().useGravity = true;
 		if(shouldConsumeParts) ConsumeBrokenParts(GetComponentsInChildren<MeshRenderer>().Select(c => c.gameObject).ToList()); // Such hax
