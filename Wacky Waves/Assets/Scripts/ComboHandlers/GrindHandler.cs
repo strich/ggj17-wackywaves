@@ -75,13 +75,13 @@ public class GrindHandler : MonoBehaviour {
         switch (tag)
         {
             case DRY_GRIND:
-                    Debug.Log(DRY_GRIND + " x "+quantity);
+              //      Debug.Log(DRY_GRIND + " x "+quantity);
                 break;
             case WET_GRIND:
-                Debug.Log(WET_GRIND + " x " + quantity);
+             //   Debug.Log(WET_GRIND + " x " + quantity);
                 break;
             case BAR_GRIND:
-                Debug.Log(BAR_GRIND + " x " + quantity);
+             //   Debug.Log(BAR_GRIND + " x " + quantity);
                 break;
             default:
                 //Debug.Log("Not for Grinds Handler");

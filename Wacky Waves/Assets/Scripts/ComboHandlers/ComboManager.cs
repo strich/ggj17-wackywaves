@@ -192,7 +192,7 @@ public class ComboManager : MonoBehaviour {
                 count = 1;
                 
             }
-            ScoreSounds.PlayOneShot(PointPing,0.1f);
+            ScoreSounds.PlayOneShot(PointPing,0.2f);
         comboScore += element.Points;
         comboMultiplier += element.Multiplier;
 
