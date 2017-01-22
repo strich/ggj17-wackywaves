@@ -14,11 +14,11 @@ public static class GameUtils
     const float WATER_SPEED_GROUND = 0.5f;
 
     const float TURN_SPEED_DEEP = 1f;
-    const float TURN_SPEED_WET_GRIND = 5f;
-    const float TURN_SPEED_SHALLOW = 5f;
-    const float TURN_SPEED_BAR_GRIND = 5f;
-    const float TURN_SPEED_DRY_GRIND = 5f;
-    const float TURN_SPEED_GROUND = 1f;
+    const float TURN_SPEED_WET_GRIND = 1.5f;
+    const float TURN_SPEED_SHALLOW = 0.85f;
+    const float TURN_SPEED_BAR_GRIND = 1.5f;
+    const float TURN_SPEED_DRY_GRIND = 1.5f;
+    const float TURN_SPEED_GROUND = 0.75f;
 
 	public const float WAVE_SIZE = 1f;
 
