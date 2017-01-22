@@ -41,11 +41,11 @@ public class CollisionManager : MonoBehaviour
 	{
 		if (collider.name.Contains("Front"))
 		{
-			_PlayerController.AddBuff(BuffManager.KEY_GLOBAL_SPEED, new DecreasingBuff(1f, 0.9f));
+			_PlayerController.AddBuff(BuffManager.KEY_GLOBAL_SPEED, new IncreasingBuff(0.2f, 1.02f, 1f));
 		}
 		else if (collider.name.Contains("Back"))
 		{
-			_PlayerController.AddBuff(BuffManager.KEY_GLOBAL_SPEED, new DecreasingBuff(1.5f, 0.999f));
+			_PlayerController.AddBuff(BuffManager.KEY_GLOBAL_SPEED, new DecreasingBuff(2.0f, 0.995f));
 		}
 
 		var npcController = collider.attachedRigidbody.GetComponent<NPCController>();
