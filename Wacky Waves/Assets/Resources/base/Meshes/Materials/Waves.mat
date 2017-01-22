@@ -123,10 +123,10 @@ Material:
       second: 10
     - first:
         name: _MainMultiplier
-      second: 1.59
+      second: 1
     - first:
         name: _MainScroll
-      second: 0.37
+      second: -0.37
     - first:
         name: _ReflectionStrength
       second: 0

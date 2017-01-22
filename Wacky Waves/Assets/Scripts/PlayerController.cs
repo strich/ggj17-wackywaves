@@ -87,6 +87,7 @@ public class PlayerController : MonoBehaviour
 	public void AddFollowerPart(GameObject go)
 	{
 		go.transform.SetParent(FollowerObjectsContainer.transform, false);
+		go.transform.position = Vector3.zero;
 		Destroy(go.GetComponent<Collider>());
 		go.AddComponent<WaveFollower>();
 	}
