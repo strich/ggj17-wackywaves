@@ -22,7 +22,7 @@ public class CollisionManager : MonoBehaviour
 		//if(collider.name.Contains("Back")) Debug.Log("We hit the back!");
 
 		// Mother of god what am i doing. Will fix...need dinner
-		var npcController = collider.attachedRigidbody.transform.parent.GetComponent<NPCController>();
+		var npcController = collider.attachedRigidbody.GetComponent<NPCController>();
 		npcController.TriggerDestroyed();
 	}
 

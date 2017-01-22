@@ -123,9 +123,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b1a9145f815c6240b33de4c12169772, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ForwardSpeed: 0.3
+  ForwardSpeedModifier: 1
   TurnSpeed: 30
   AngleSmoothing: 2
+  PotentialDropOff: 2
+  FollowerObjectsContainer: {fileID: 0}
+  _Rotation: 0
+  _Potential: 0
 --- !u!136 &136765078817475566
 CapsuleCollider:
   m_ObjectHideFlags: 1
