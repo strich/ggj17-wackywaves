@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ComboManager : MonoBehaviour {
 
@@ -23,6 +24,16 @@ public class ComboManager : MonoBehaviour {
     private int comboMultiplier;
     private Dictionary<string, ComboElement> comboElements;
     private ComboElement activeComboElement;
+    //private GameObject CloneComboGui;
+
+    // text out stuff
+    Text activeComboText;
+    Text activeComboPoints;
+    Text activeMultiplier;
+    GameObject comboWindow;
+    GameObject comboElementGUI;
+    GameObject comboHolder;
+    //List<GameObject> combos;
 
 
     private static ComboManager instance;
@@ -46,12 +57,13 @@ public class ComboManager : MonoBehaviour {
         int Points;
     }
 
-    public struct ComboElement
+    public class ComboElement
     {
         public string  Name;       //dolphin / surfer etc?
   //      public bool Instant;    // or continuous - continuous now done by repeated sends
         public int Points;     // instant points, or points per second
-        public int Multiplier;       // 
+        public int Multiplier;
+        public GameObject guiText;// 
     }
 
     void Awake()
@@ -67,11 +79,21 @@ public class ComboManager : MonoBehaviour {
         }
         comboElements = new Dictionary<string, ComboElement>();
         CurrentCombo = new Dictionary<string, int>();
+        
     }
 
    
     // Use this for initialization
     void Start () {
+        
+        activeComboText = GameObject.Find("ComboElement").GetComponent<Text>();
+        activeComboPoints = GameObject.Find("ComboPoints").GetComponent<Text>();
+        activeMultiplier = GameObject.Find("Multiplier").GetComponent<Text>();
+        comboWindow = GameObject.Find("Combo Panel");
+        comboHolder = GameObject.Find("Combo Holder");
+        comboElementGUI = GameObject.Find("Combo Element");
+        //comboElementGUI.transform.parent = null;
+        comboElementGUI.SetActive(false);
         ResetCombo();
     }
 	
@@ -113,6 +135,12 @@ public class ComboManager : MonoBehaviour {
         CurrentCombo    = new Dictionary<string, int> ();
         comboScore      = 0;
         comboMultiplier = 1;
+        comboWindow.SetActive(false);
+        for (int i=1; i< comboHolder.transform.childCount; i++)
+        {
+          
+            Destroy(comboHolder.transform.GetChild(i).gameObject);
+        }
     }
 
 
@@ -123,11 +151,13 @@ public class ComboManager : MonoBehaviour {
     /// <param name="element"></param>
     public void AddComboElement(string elementName)
     {
+        comboWindow.SetActive(true);
         int count = 0;
         ComboElement element;
         if (!comboElements.TryGetValue(elementName, out element))
         {
             Debug.LogError("ComboElement " + elementName + " does not exist!");
+            return;
         }
 
        
@@ -148,14 +178,26 @@ public class ComboManager : MonoBehaviour {
             }
             else
             {
+            comboElements[elementName].guiText = Instantiate(comboElementGUI, comboHolder.transform);
+            comboElements[elementName].guiText.SetActive(true);
+          //element.guiText = Instantiate(comboElementGUI, comboWindow.transform);
                 CurrentCombo.Add(elementName, 1);
                 count = 1;
                 
             }
         comboScore += element.Points;
         comboMultiplier += element.Multiplier;
-           
 
+        activeComboText.text = elementName;
+        activeComboPoints.text = "x " + comboScore;
+        activeMultiplier.text = "X "+ comboMultiplier;
+        if (element.guiText==null)
+        {
+            Debug.Log("Arp@");
+        }
+        Text[] labels = element.guiText.GetComponentsInChildren<Text>();
+        labels[0].text = activeComboText.text;
+        labels[1].text = activeComboPoints.text;
         countdown = ComboCountdown;
         //heckCombos();
         // 
