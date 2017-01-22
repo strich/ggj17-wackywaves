@@ -4,6 +4,7 @@ public class CollisionManager : MonoBehaviour
 {
     const string TAG_CLIFF = "Cliff";
     const string TAG_NPC = "NPC";
+    const string TAG_NPCWAVE = "NPC-Wave";
 
     PlayerController _PlayerController;
 
@@ -25,14 +26,14 @@ public class CollisionManager : MonoBehaviour
         {
             _PlayerController.HitCliff(collider);
         }
-		else if (collider.gameObject.CompareTag("NPC-Wave"))
+		else if (collider.gameObject.CompareTag(TAG_NPCWAVE))
 		{
 			WaveCollision(collider);
 		}
 		else if (collider.gameObject.CompareTag(TAG_NPC))
         {
             var npcController = collider.attachedRigidbody.GetComponent<NPCController>();
-            npcController.TriggerDestroyed();
+            npcController.TriggerDestroyed(10f);
         }
     }
 
@@ -40,14 +41,14 @@ public class CollisionManager : MonoBehaviour
 	{
 		if (collider.name.Contains("Front"))
 		{
-			_PlayerController.AddBuff("Wave Frontal Hit", new DecreasingBuff(-5f, 0.99f));
+			_PlayerController.AddBuff(BuffManager.KEY_GLOBAL_SPEED, new DecreasingBuff(1f, 0.9f));
 		}
 		else if (collider.name.Contains("Back"))
 		{
-			_PlayerController.AddBuff("Wave Behind Hit", new IncreasingBuff(2f, 0.99f, 4f));
+			_PlayerController.AddBuff(BuffManager.KEY_GLOBAL_SPEED, new DecreasingBuff(1.5f, 0.999f));
 		}
 
 		var npcController = collider.attachedRigidbody.GetComponent<NPCController>();
-		npcController.TriggerDestroyed(false);
+		npcController.TriggerDestroyed(0f, false);
 	}
 }

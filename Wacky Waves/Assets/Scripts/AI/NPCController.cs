@@ -84,7 +84,6 @@ public class NPCController : MonoBehaviour
 			{
 				MoveBackNForth();
 			}
-
 		}
 	}
 
@@ -129,7 +128,7 @@ public class NPCController : MonoBehaviour
 		//	Time.deltaTime * AngleSmoothing);
 	}
 
-	public void TriggerDestroyed(bool shouldConsumeParts = true)
+	public void TriggerDestroyed(float destroyDelay = 0f, bool shouldConsumeParts = true)
 	{
 		if (_isDead) return;
 
@@ -137,7 +136,7 @@ public class NPCController : MonoBehaviour
 		//GetComponentInChildren<Rigidbody>().isKinematic = false;
 		//GetComponentInChildren<Rigidbody>().useGravity = true;
 		if(shouldConsumeParts) ConsumeBrokenParts(GetComponentsInChildren<MeshRenderer>().Select(c => c.gameObject).ToList()); // Such hax
-		Destroy(gameObject, 10f);
+		Destroy(gameObject, destroyDelay);
 	}
 
 	private void ConsumeBrokenParts(List<GameObject> gos)
@@ -150,6 +149,7 @@ public class NPCController : MonoBehaviour
 
 	public enum MoveType
 	{
+		None,
 		RallyPoint,
 		BackNForth
 	}
