@@ -28,6 +28,7 @@ public class PlayerController : MonoBehaviour
     /* Buffs */
     Buff _GrindSpeedBuff;
     Buff _OffGrindSpeedBuff;
+
     Buff _GrindTurnBuff;
     Buff _OffGrindTurnBuff;
 
@@ -150,6 +151,11 @@ public class PlayerController : MonoBehaviour
     public void RemoveBuff(string key, Buff buff)
     {
         _BuffManager.RemoveBuff(key, buff);
+    }
+
+    public void HitCliff(Collider collider)
+    {
+        Debug.Log("Hit Cliff");
     }
 
     void ApplyInput()
