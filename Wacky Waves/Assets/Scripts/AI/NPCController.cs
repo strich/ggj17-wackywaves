@@ -32,18 +32,37 @@ public class NPCController : MonoBehaviour
 
 	private PlayerController _player;
 
+	public MoveType MovementType;
+
+	public float BackNForthRange;
+	private Vector3 _backNForthMinPoint;
+	private Vector3 _backNForthMaxPoint;
+	private Vector3 _currentBackNForthPoint;
+
 	void Start () {
 		_player = GameObject.Find("Player").GetComponent<PlayerController>();
 
-		var ray = new Ray(RallyPoint.transform.position, Vector3.down);
-		RaycastHit hit;
-		if (Physics.Raycast(ray, out hit, 50, LayerMask.GetMask("Ground")))
+		if (MovementType == MoveType.RallyPoint)
 		{
-			_currentTerrain = hit.transform.GetComponent<Terrain>();
+			var ray = new Ray(RallyPoint.transform.position, Vector3.down);
+			RaycastHit hit;
+			if (Physics.Raycast(ray, out hit, 50, LayerMask.GetMask("Ground")))
+			{
+				_currentTerrain = hit.transform.GetComponent<Terrain>();
+			}
+			else
+			{
+				Debug.LogError("Fuck me sideways I couldn't find a terrain under " + transform.name + " at " + RallyPoint);
+			}
 		}
-		else
+		else if (MovementType == MoveType.BackNForth)
 		{
-			Debug.LogError("Fuck me sideways I couldn't find a terrain under " + transform.name + " at " + RallyPoint);
+			_backNForthMinPoint = transform.position + (transform.forward*BackNForthRange);
+			_backNForthMaxPoint = transform.position - (transform.forward*BackNForthRange);
+
+			_currentBackNForthPoint = Vector3.Distance(transform.position, _backNForthMinPoint) <
+			                          Vector3.Distance(transform.position, _backNForthMaxPoint) 
+									  ? _backNForthMinPoint : _backNForthMaxPoint;
 		}
 	}
 
@@ -51,22 +70,45 @@ public class NPCController : MonoBehaviour
 	{
 		if (!_isDead)
 		{
-			if (Time.time > _lastTargetFindTime + TargetWaitTime)
+			if (MovementType == MoveType.RallyPoint)
 			{
-				_lastTargetFindTime = Time.time;
+				if (Time.time > _lastTargetFindTime + TargetWaitTime)
+				{
+					_lastTargetFindTime = Time.time;
 
-				FindNewMoveTarget();
+					FindNewMoveTarget();
+				}
+
+				MoveToTarget();
+			} else if (MovementType == MoveType.BackNForth)
+			{
+				MoveBackNForth();
 			}
 
-			MoveToTarget();
 		}
+	}
+
+	private void MoveBackNForth()
+	{
+		if (Vector3.Distance(transform.position, _currentBackNForthPoint) < 1f)
+		{
+			// Time to change point
+			_currentBackNForthPoint = Vector3.Distance(transform.position, _backNForthMinPoint) >
+									  Vector3.Distance(transform.position, _backNForthMaxPoint) 
+									  ? _backNForthMinPoint : _backNForthMaxPoint;
+		}
+
+		transform.position = Vector3.MoveTowards(transform.position, _currentBackNForthPoint, Time.deltaTime * ForwardSpeed);
+		transform.LookAt(_currentBackNForthPoint);
 	}
 
 	private void FindNewMoveTarget()
 	{
 		var localPos = new Vector3(Random.Range(-MoveRadius, MoveRadius), 0, Random.Range(-MoveRadius, MoveRadius));
 		var worldPos = RallyPoint.transform.position + localPos;
-		var height = _currentTerrain.terrainData.GetHeight((int)worldPos.x, (int)worldPos.z);
+		var height = _currentTerrain.terrainData.GetHeight(
+			(int)(worldPos.x / _currentTerrain.terrainData.heightmapScale.x), 
+			(int)(worldPos.z / _currentTerrain.terrainData.heightmapScale.z));
 
 		if (height > WATER_HEIGHT_SHALLOW) return;
 
@@ -104,5 +146,11 @@ public class NPCController : MonoBehaviour
 		{
 			_player.AddFollowerPart(go);
 		}
+	}
+
+	public enum MoveType
+	{
+		RallyPoint,
+		BackNForth
 	}
 }

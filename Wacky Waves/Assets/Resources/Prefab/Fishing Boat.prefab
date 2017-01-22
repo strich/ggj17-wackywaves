@@ -674,6 +674,8 @@ MonoBehaviour:
   ForwardSpeed: 1
   AngleSmoothing: 2
   _isDead: 0
+  MovementType: 0
+  BackNForthRange: 0
 --- !u!198 &198144213441465252
 ParticleSystem:
   m_ObjectHideFlags: 1
