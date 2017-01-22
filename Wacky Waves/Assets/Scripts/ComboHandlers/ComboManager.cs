@@ -35,6 +35,9 @@ public class ComboManager : MonoBehaviour {
     GameObject comboHolder;
     //List<GameObject> combos;
 
+    public AudioClip PointPing;
+    private  AudioSource ScoreSounds;
+
 
     private static ComboManager instance;
     public static ComboManager Instance
@@ -79,13 +82,13 @@ public class ComboManager : MonoBehaviour {
         }
         comboElements = new Dictionary<string, ComboElement>();
         CurrentCombo = new Dictionary<string, int>();
-        
+    //    ScoreSounds = new AudioSource();
     }
 
    
     // Use this for initialization
     void Start () {
-        
+        ScoreSounds = GetComponent<AudioSource>();
         activeComboText = GameObject.Find("ComboElement").GetComponent<Text>();
         activeComboPoints = GameObject.Find("ComboPoints").GetComponent<Text>();
         activeMultiplier = GameObject.Find("Multiplier").GetComponent<Text>();
@@ -151,6 +154,10 @@ public class ComboManager : MonoBehaviour {
     /// <param name="element"></param>
     public void AddComboElement(string elementName)
     {
+        if (countdown == 0)
+        {
+            // Combo Starting
+        }
         comboWindow.SetActive(true);
         int count = 0;
         ComboElement element;
@@ -159,7 +166,7 @@ public class ComboManager : MonoBehaviour {
             Debug.LogError("ComboElement " + elementName + " does not exist!");
             return;
         }
-
+        
        
             bool inCombo = CurrentCombo.TryGetValue(elementName, out count);
 
@@ -185,16 +192,17 @@ public class ComboManager : MonoBehaviour {
                 count = 1;
                 
             }
+            ScoreSounds.PlayOneShot(PointPing, 0.5f);
         comboScore += element.Points;
         comboMultiplier += element.Multiplier;
 
         activeComboText.text = elementName;
         activeComboPoints.text = "x " + comboScore;
         activeMultiplier.text = "X "+ comboMultiplier;
-        if (element.guiText==null)
-        {
-            Debug.Log("Arp@");
-        }
+        //if (element.guiText==null)
+        //{
+        //    Debug.Log("Arp@");
+        //}
         Text[] labels = element.guiText.GetComponentsInChildren<Text>();
         labels[0].text = activeComboText.text;
         labels[1].text = activeComboPoints.text;
