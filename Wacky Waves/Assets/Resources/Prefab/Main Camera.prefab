@@ -161,7 +161,7 @@ GameObject:
   - component: {fileID: 114964768688926914}
   - component: {fileID: 114262621787514540}
   m_Layer: 0
-  m_Name: Combo Window
+  m_Name: Combo Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -282,7 +282,7 @@ GameObject:
   - component: {fileID: 224054847398999458}
   - component: {fileID: 114067870561820416}
   m_Layer: 0
-  m_Name: Combos
+  m_Name: Combo Holder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
