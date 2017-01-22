@@ -21,8 +21,8 @@ public class ComboManager : MonoBehaviour {
     private Dictionary<string, int> CurrentCombo;
     private int comboScore;
     private int comboMultiplier;
-    private Dictionary<string, ComboElement> ComboElements;
-
+    private Dictionary<string, ComboElement> comboElements;
+    private ComboElement activeComboElement;
 
 
     private static ComboManager instance;
@@ -49,14 +49,14 @@ public class ComboManager : MonoBehaviour {
     public struct ComboElement
     {
         public string  Name;       //dolphin / surfer etc?
-        public bool Instant;    // or continuous
+  //      public bool Instant;    // or continuous - continuous now done by repeated sends
         public int Points;     // instant points, or points per second
       //  int Quantity;       // number of elements / lenght of grind
     }
 
     void Awake()
     {
-        ComboElements = new Dictionary<string, ComboElement>();
+        comboElements = new Dictionary<string, ComboElement>();
         CurrentCombo = new Dictionary<string, int>();
     }
     // Use this for initialization
@@ -98,40 +98,43 @@ public class ComboManager : MonoBehaviour {
     /// Add a comboelement to current combo
     /// </summary>
     /// <param name="element"></param>
-    public void AddComboElement(string element, bool end)
+    public void AddComboElement(string elementName)
     {
         int count = 0;
-        ComboElement elementT;
-        if (!ComboElements.TryGetValue(element, out elementT))
+        ComboElement element;
+        if (!comboElements.TryGetValue(elementName, out element))
         {
-            Debug.LogError("ComboElement " + element + " does not exist!");
+            Debug.LogError("ComboElement " + elementName + " does not exist!");
         }
 
-        bool inCombo = CurrentCombo.TryGetValue(element, out count);
-
-       // int increment;
-        //if (elementT.Instant)
-        //{
-        //    increment = 1;
-        //}
-        // else a registered combo handler 
-        // invocation will deal with it;
        
-        if (inCombo)
-        {
-            CurrentCombo[element] = count + 1;
-        }
-        else
-        {
-            CurrentCombo.Add(element, 1);
-            count = 1;
-        }
+            bool inCombo = CurrentCombo.TryGetValue(elementName, out count);
+
+            // int increment;
+            //if (elementT.Instant)
+            //{
+            //    increment = 1;
+            //}
+            // else a registered combo handler 
+            // invocation will deal with it;
+
+            if (inCombo)
+            {
+                CurrentCombo[elementName] = count + 1;
+            }
+            else
+            {
+                CurrentCombo.Add(elementName, 1);
+                count = 1;
+            }
+       
+           
 
         countdown = ComboCountdown;
         //heckCombos();
         // 
         // deal with any continous or other odd combo rules
-        ComboHandlers.Invoke(element, count);
+        ComboHandlers.Invoke(elementName, count);
     }
 
     ///// <summary>
@@ -148,9 +151,9 @@ public class ComboManager : MonoBehaviour {
     /// <param name="element"></param>
     public void CreateComboElement(ComboElement element)
     {
-        if(!ComboElements.ContainsKey(element.Name))
+        if(!comboElements.ContainsKey(element.Name))
         {
-            ComboElements.Add(element.Name, element);
+            comboElements.Add(element.Name, element);
         }
         else
         {

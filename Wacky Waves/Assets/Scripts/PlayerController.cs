@@ -45,11 +45,12 @@ public class PlayerController : MonoBehaviour
         CreateBuffs();
     }
 
-    void Update ()
-	{
+    void Update()
+    {
         ApplyInput();
         Move();
-	}
+
+    }
 
     void OnDestroy()
     {

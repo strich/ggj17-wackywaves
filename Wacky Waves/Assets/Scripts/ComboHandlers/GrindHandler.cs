@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GrindHandler : MonoBehaviour {
-    public const string GRIND_START = "GRIND_START";
-    public const string GRIND_OVER  = "GRIND_OVER";
+    public const string DRY_GRIND = "DRY_GRIND";
+    public const string WET_GRIND = "WET_GRIND";
+    public const string GRIND_COMBO = "GRIND_COMBO";
 
     private static GrindHandler instance;
     public static GrindHandler Instance
@@ -20,14 +21,35 @@ public class GrindHandler : MonoBehaviour {
         private set { instance = value; }
     }
 
+    void Awake()
+    {
+        ComboManager.Instance.ComboHandlers += HandleGrind;
+        ComboManager.ComboElement DryGrind = new ComboManager.ComboElement();
+        DryGrind.Name = DRY_GRIND;
+        DryGrind.Points = 1;
+        ComboManager.ComboElement WetGrind = new ComboManager.ComboElement();
+        WetGrind.Name = WET_GRIND;
+        WetGrind.Points = 1;
+    }
+
     // Use this for initialization
     void Start () {
-        ComboManager.Instance.ComboHandlers += HandleGrind;
-        ComboManager.ComboElement GrindCombo = new ComboManager.ComboElement();
-        GrindCombo.Name = "Grind";
-        GrindCombo.Instant = false;
-        GrindCombo.Points = 1;
-        ComboManager.Instance.CreateComboElement(GrindCombo);
+        //ComboManager.Instance.ComboHandlers += HandleGrind;
+        //ComboManager.ComboElement GrindStart = new ComboManager.ComboElement();
+        //GrindStart.Name = GRIND_START;
+        //GrindStart.Instant = false;
+        //GrindStart.Points = 1;
+        //ComboManager.Instance.CreateComboElement(GrindStart);
+        //ComboManager.ComboElement GrindOver = new ComboManager.ComboElement();
+        //GrindOver.Name = GRIND_OVER;
+        //GrindOver.Instant = false;
+        //GrindOver.Points = 1;
+        //ComboManager.Instance.CreateComboElement(GrindOver);
+        //ComboManager.ComboElement GrindCombo = new ComboManager.ComboElement();
+        //GrindCombo.Name = GRIND_COMBO;
+        //GrindCombo.Instant = true;
+        //GrindCombo.Points = 10;
+        //ComboManager.Instance.CreateComboElement(GrindCombo);
     }
 	
 	// Update is called once per frame
@@ -41,21 +63,14 @@ public class GrindHandler : MonoBehaviour {
     {
         switch (tag)
         {
-            case GRIND_START:
-                    Debug.Log(GRIND_START);
-                if (!inGrind)
-                {
-                    inGrind = true;
-                }
-                else
-                {
-                    Debug.LogWarning("already in grind!");
-                }
+            case DRY_GRIND:
+                    Debug.Log(DRY_GRIND + " x "+quantity);
+                
+                   
+                
                 break;
-            case GRIND_OVER:
-                Debug.Log(GRIND_OVER);
-                // end grind
-                // Add a GrindCombo in Combo Manager 
+            case WET_GRIND:
+                Debug.Log(DRY_GRIND + " x " + quantity);
                 break;
             default:
                 Debug.Log("Not for Grinds Handler");

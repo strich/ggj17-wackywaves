@@ -46,7 +46,22 @@ public class StateController : MonoBehaviour
 
             _State = state;
         }
-	}
+
+        switch (GetCurrentState())
+        {
+            case StateController.State.DRY_GRIND:
+                ComboManager.Instance.AddComboElement(GrindHandler.DRY_GRIND);
+                break;
+            case StateController.State.WET_GRIND:
+                ComboManager.Instance.AddComboElement(GrindHandler.WET_GRIND);
+                break;
+            default:
+                //nothing doing
+                break;
+
+
+        }
+    }
 
     State GetCurrentState()
     {
