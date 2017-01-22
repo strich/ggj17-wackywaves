@@ -15,6 +15,7 @@ public class AmbAudioController : MonoBehaviour
 
 	private GameObject _player;
     StateController _StateController;
+	private AudioCrossFader _crossFader;
 
 	static Random rnd = new Random();
 
@@ -22,6 +23,7 @@ public class AmbAudioController : MonoBehaviour
 		_player = GameObject.Find("Player");
 		_StateController = _player.GetComponent<StateController>();
 		_StateController.OnStateChanged += OnStateChanged;
+		_crossFader = GetComponent<AudioCrossFader>();
 	}
 
 	void OnDestroy()
@@ -53,7 +55,6 @@ public class AmbAudioController : MonoBehaviour
 
 	private void ChangeClip(AudioClip clip)
 	{
-		SourceA.clip = clip;
-		SourceA.Play();
+		_crossFader.CrossFade(clip, 1f, 3f);
 	}
 }
