@@ -62,9 +62,15 @@ public class PlayerController : MonoBehaviour
 
         ConsolidateIntoSingleBuff(BuffManager.KEY_GLOBAL_SPEED, _SpeedBuffs[currentState]);
         ConsolidateIntoSingleBuff(BuffManager.KEY_GLOBAL_TURN_SPEED, _TurnSpeedBuffs[currentState]);
+
+        if (currentState == StateController.State.GROUND)
+        {
+            _BuffManager.Wipe(BuffManager.KEY_GLOBAL_SIZE);
+            RemoveFollowers();
+        }
     }
 
-	public void AddFollowerPart(GameObject go)
+    public void AddFollowerPart(GameObject go)
 	{
 		go.transform.SetParent(FollowerObjectsContainer.transform, true);
 		//go.transform.position = Vector3.zero;
@@ -154,6 +160,18 @@ public class PlayerController : MonoBehaviour
     {
         _Potential = Mathf.Clamp01(power);
         UpdateView();
+    }
+
+    void RemoveFollowers()
+    {
+        foreach (Transform child in FollowerObjectsContainer.transform)
+        {
+            Destroy(child.gameObject.GetComponent<WaveFollower>());
+            child.gameObject.AddComponent<Rigidbody>();
+            child.gameObject.AddComponent<BoxCollider>();
+        }
+
+        FollowerObjectsContainer.transform.DetachChildren();
     }
 
     void UpdateView()
