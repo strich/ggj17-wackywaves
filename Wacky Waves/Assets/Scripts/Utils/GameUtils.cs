@@ -6,11 +6,17 @@ public static class GameUtils
 
     const float STEP_BACK = 1f;
 
-    const float WATER_SPEED_DEEP = 1.5f;
-    const float WATER_SPEED_WET_GRIND = 1.4f;
+    const float WATER_SPEED_DEEP = 1.2f;
+    const float WATER_SPEED_WET_GRIND = 1f;
     const float WATER_SPEED_SHALLOW = 1f;
-    const float WATER_SPEED_DRY_GRIND = 0.9f;
+    const float WATER_SPEED_DRY_GRIND = 1f;
     const float WATER_SPEED_GROUND = 0.5f;
+
+    const float TURN_SPEED_DEEP = 1f;
+    const float TURN_SPEED_WET_GRIND = 5f;
+    const float TURN_SPEED_SHALLOW = 5f;
+    const float TURN_SPEED_DRY_GRIND = 5f;
+    const float TURN_SPEED_GROUND = 1f;
 
     static Transform _Transform;
 
@@ -53,6 +59,24 @@ public static class GameUtils
                 return WATER_SPEED_GROUND;
         }
 
+        return 0f;
+    }
+
+    public static float GetStateTurnSpeed(StateController.State state)
+    {
+        switch (state)
+        {
+            case StateController.State.DEEP:
+                return TURN_SPEED_DEEP;
+            case StateController.State.WET_GRIND:
+                return TURN_SPEED_WET_GRIND;
+            case StateController.State.SHALLOW:
+                return TURN_SPEED_SHALLOW;
+            case StateController.State.DRY_GRIND:
+                return TURN_SPEED_DRY_GRIND;
+            case StateController.State.GROUND:
+                return TURN_SPEED_GROUND;
+        }
         return 0f;
     }
 
