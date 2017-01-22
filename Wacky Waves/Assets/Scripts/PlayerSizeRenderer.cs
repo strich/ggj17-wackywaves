@@ -27,6 +27,7 @@ public class PlayerSizeRenderer : MonoBehaviour
 	private PlayerController _playerController;
 	private StateController _stateController;
 	public GameObject FollowerObjects;
+	public GameObject ScaleTarget;
 
 	void Start ()
 	{
@@ -90,8 +91,8 @@ public class PlayerSizeRenderer : MonoBehaviour
 		//		throw new ArgumentOutOfRangeException();
 		//}
 
-		transform.localScale = Vector3.Lerp(transform.localScale, Vector3.one*currentSize, Time.deltaTime);
-		FollowerObjects.transform.localScale = Vector3.Lerp(FollowerObjects.transform.localScale, Vector3.one / currentSize, Time.deltaTime);
+		ScaleTarget.transform.localScale = Vector3.Lerp(transform.localScale, Vector3.one*currentSize, Time.deltaTime);
+		//FollowerObjects.transform.localScale = Vector3.Lerp(FollowerObjects.transform.localScale, Vector3.one / currentSize, Time.deltaTime);
 
 	}
 
