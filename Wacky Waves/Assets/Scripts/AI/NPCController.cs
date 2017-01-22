@@ -94,7 +94,7 @@ public class NPCController : MonoBehaviour
 		_isDead = true;
 		//GetComponentInChildren<Rigidbody>().isKinematic = false;
 		//GetComponentInChildren<Rigidbody>().useGravity = true;
-		ConsumeBrokenParts(GetComponentsInChildren<Collider>().Select(c => c.gameObject).ToList()); // Such hax
+		ConsumeBrokenParts(GetComponentsInChildren<MeshRenderer>().Select(c => c.gameObject).ToList()); // Such hax
 		Destroy(gameObject, 10f);
 	}
 
