@@ -17,7 +17,21 @@ public class MusicManager : MonoBehaviour
 			_sources.Add(src);
 		}
 
-		_sources.ForEach(s => s.Play());
+		_sources.ForEach(s => {
+			s.volume = 0f;
+			s.loop = true;
+			s.Play();
+		});
+
+		_sources[0].volume = 1f;
+	}
+
+	public void SetIntensity(int intensity)
+	{
+		if (Mathf.Clamp(intensity, 1, MusicTracks.Count) == _intensityLevel) return;
+
+		_intensityLevel = Mathf.Clamp(intensity, 1, MusicTracks.Count);
+		ChangeTrack();
 	}
 
 	public void IncreaseIntensity()
@@ -36,6 +50,6 @@ public class MusicManager : MonoBehaviour
 	{
 		_sources.ForEach(s => s.volume = 0f);
 
-		_sources[_intensityLevel].volume = 1f;
+		_sources[_intensityLevel-1].volume = 1f;
 	}
 }

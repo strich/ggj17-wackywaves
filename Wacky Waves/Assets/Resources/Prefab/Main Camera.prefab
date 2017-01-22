@@ -807,7 +807,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84e898507dc3a6b4fa3e3ad401826ca3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MusicTracks: []
+  MusicTracks:
+  - {fileID: 8300000, guid: 94668e6b0f996964fb52d20815c4b9a6, type: 3}
+  - {fileID: 8300000, guid: 19ee08ee405aa5c48b140a0265a034fa, type: 3}
+  - {fileID: 8300000, guid: 9aeebeca8cf9beb4c8444b5c14ad9d1c, type: 3}
 --- !u!114 &114636417645429736
 MonoBehaviour:
   m_ObjectHideFlags: 1
