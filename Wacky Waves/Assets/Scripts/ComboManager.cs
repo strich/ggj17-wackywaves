@@ -85,7 +85,7 @@ public class ComboManager : MonoBehaviour {
             CurrentCombo.Add(element, 1);
         }
         countdown = ComboCountdown;
-        CheckCombos();
+       //heckCombos();
     }
 
     ///// <summary>
@@ -108,7 +108,7 @@ public class ComboManager : MonoBehaviour {
         }
         else
         {
-            Debug.LogWarning("ComboElement " +element.Name+" already exisists!")
+            Debug.LogWarning("ComboElement " + element.Name + " already exisists!");
         }
     }
 }
