@@ -5,36 +5,21 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
 	private GameObject _player;
-	public float RotateFollowSmoothing = 1.0f;
-	public float CameraDistance = 20f;
+	public float RotateFollowSmoothing = 10.0f;
+	public GameObject CameraTarget;
 
 	void Start ()
 	{
 		_player = GameObject.Find("Player");
-
-		transform.position = new Vector3(
-			_player.transform.position.x, 
-			_player.transform.position.y + CameraDistance, 
-			_player.transform.position.z);
-
-		transform.rotation = Quaternion.Euler(
-			90, 
-			_player.transform.rotation.y, 
-			_player.transform.rotation.z);
 	}
 	
 	void Update ()
 	{
-		transform.position = new Vector3(
-			_player.transform.position.x,
-			_player.transform.position.y + CameraDistance,
-			_player.transform.position.z);
+		transform.position = CameraTarget.transform.position;
 
 		transform.rotation = Quaternion.Slerp(
 			transform.rotation,
-			Quaternion.Euler(90,
-				_player.transform.rotation.y,
-				_player.transform.rotation.z),
+			CameraTarget.transform.rotation,
 			Time.deltaTime * RotateFollowSmoothing);
 	}
 }
