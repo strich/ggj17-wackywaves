@@ -53,16 +53,30 @@ public class DaveCameraController : MonoBehaviour
         //    0,
         //    0);//,
         //  Time.deltaTime* RotateFollowSmoothing);
-        transform.position = _target.transform.position;
+        //transform.position = _target.transform.position;
+        //transform.rotation = Quaternion.Euler(CameraAngle,
+        //   _target.transform.eulerAngles.y,
+        //   _target.transform.eulerAngles.z);
+        //transform.rotation = Quaternion.Euler(CameraAngle,
+        //  _target.transform.eulerAngles.y,
+        //  _target.transform.eulerAngles.z);
+        //transform.position = _target.transform.position;
+
+        transform.position = Vector3.SmoothDamp(transform.position, _target.transform.position, ref smoothVelocity, SmoothTime);
+        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(CameraAngle,
+           _target.transform.eulerAngles.y,
+           _target.transform.eulerAngles.z), RotateFollowSmoothing);
     }
 
     void LateUpdate()
     {
+       
+       
         //transform.position = _target.transform.position;
         // transform.position = Vector3.Lerp(transform.position, _target.transform.position, SmoothTime*Time.deltaTime);
-      //  transform.position = Vector3.SmoothDamp(transform.position, _target.transform.position, ref smoothVelocity, SmoothTime);
-        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(CameraAngle,
-           _target.transform.eulerAngles.y,
-           _target.transform.eulerAngles.z), RotateFollowSmoothing);
+        //  transform.position = Vector3.SmoothDamp(transform.position, _target.transform.position, ref smoothVelocity, SmoothTime);
+        //transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(CameraAngle,
+        //   _target.transform.eulerAngles.y,
+        //   _target.transform.eulerAngles.z), RotateFollowSmoothing);
     }
 }
