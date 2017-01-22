@@ -166,9 +166,13 @@ public class PlayerController : MonoBehaviour
     {
         foreach (Transform child in FollowerObjectsContainer.transform)
         {
-            Destroy(child.gameObject.GetComponent<WaveFollower>());
+            if (child.gameObject.GetComponent<WaveFollower>() != null)
+            {
+                Destroy(child.gameObject.GetComponent<WaveFollower>());
+            }
             child.gameObject.AddComponent<Rigidbody>();
             child.gameObject.AddComponent<BoxCollider>();
+            child.gameObject.tag = "Untagged";
         }
 
         FollowerObjectsContainer.transform.DetachChildren();
