@@ -32,9 +32,10 @@ public class WaterTypeResolver : MonoBehaviour
 		{
 			Debug.LogError("Fuck me sideways I could find a terrain under me!");
 		}
-	}
-	
-	void Update ()
+
+    }
+
+    void Update ()
 	{
 		// Store last height
 		if (_prevTerrainHeightPosX != (int)transform.position.x ||
@@ -78,7 +79,6 @@ public class WaterTypeResolver : MonoBehaviour
             (int) (position.x / _currentTerrain.terrainData.heightmapScale.x),
             (int) (position.z / _currentTerrain.terrainData.heightmapScale.z));
     }
-
 }
 
 public enum WaterType
