@@ -7,6 +7,7 @@ public class BuffManager : MonoBehaviour
     public const string KEY_LOCAL_SPEED = "KEY_LOCAL_SPEED";
     public const string KEY_GLOBAL_SPEED = "KEY_GLOBAL_SPEED";
     public const string KEY_GLOBAL_TURN_SPEED = "KEY_GLOBAL_TURN_SPEED";
+    public const string KEY_GLOBAL_SIZE = "KEY_GLOBAL_SIZE";
 
     public Dictionary<string, List<Buff>> _Buffs = new Dictionary<string, List<Buff>>();
 

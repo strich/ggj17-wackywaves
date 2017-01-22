@@ -145,6 +145,8 @@ public class NPCController : MonoBehaviour
 		{
 			_player.AddFollowerPart(go);
 		}
+
+		_player.AddBuff(BuffManager.KEY_GLOBAL_SIZE, new ConstantBuff(0.2f));
 	}
 
 	public enum MoveType

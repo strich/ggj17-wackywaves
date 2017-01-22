@@ -182,19 +182,24 @@ public class PlayerController : MonoBehaviour
         _TurnSpeedBuffs.Add(StateController.State.SHALLOW, new DecreasingBuff(1f, 0.999f));
         _TurnSpeedBuffs.Add(StateController.State.DRY_GRIND, new IncreasingBuff(1f, 1.01f, 2f));
         _TurnSpeedBuffs.Add(StateController.State.GROUND, new DecreasingBuff(1f, 0.9f));
-    }
+	}
 
     float GetForwardSpeed()
     {
         INSPECTOR_SPEED =
             ForwardSpeedModifier * _BuffManager.Modify(BuffManager.KEY_GLOBAL_SPEED, _BuffManager.Modify(BuffManager.KEY_LOCAL_SPEED, GameUtils.GetStateSpeed(_StateController.CurrentState)));
-        return ForwardSpeedModifier * _BuffManager.Modify(BuffManager.KEY_GLOBAL_SPEED, _BuffManager.Modify(BuffManager.KEY_LOCAL_SPEED, GameUtils.GetStateSpeed(_StateController.CurrentState)));
+        return INSPECTOR_SPEED;
     }
 
     float GetTurnSpeed()
     {
         return GameUtils.GetStateTurnSpeed(_StateController.CurrentState);
     }
+
+	public float GetSize()
+	{
+		return _BuffManager.Modify(BuffManager.KEY_GLOBAL_SIZE, GameUtils.WAVE_SIZE);
+	}
 
     void Move()
     {

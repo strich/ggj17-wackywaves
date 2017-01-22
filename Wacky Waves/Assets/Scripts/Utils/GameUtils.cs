@@ -18,6 +18,8 @@ public static class GameUtils
     const float TURN_SPEED_DRY_GRIND = 5f;
     const float TURN_SPEED_GROUND = 1f;
 
+	public const float WAVE_SIZE = 1f;
+
     static Transform _Transform;
 
     public static float GetDeviation(Transform t)
