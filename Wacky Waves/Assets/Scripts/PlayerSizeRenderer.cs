@@ -50,6 +50,8 @@ public class PlayerSizeRenderer : MonoBehaviour
 			case StateController.State.SHALLOW:
 				_useShallowWave = true;
 				break;
+			case StateController.State.BAR_GRIND:
+				break;
 			case StateController.State.DRY_GRIND:
 				break;
 			case StateController.State.GROUND:

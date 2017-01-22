@@ -49,7 +49,6 @@ public class PlayerController : MonoBehaviour
     {
         ApplyInput();
         Move();
-
     }
 
     void OnDestroy()
@@ -63,25 +62,6 @@ public class PlayerController : MonoBehaviour
 
         ConsolidateIntoSingleBuff(BuffManager.KEY_GLOBAL_SPEED, _SpeedBuffs[currentState]);
         ConsolidateIntoSingleBuff(BuffManager.KEY_GLOBAL_TURN_SPEED, _TurnSpeedBuffs[currentState]);
-
-        switch (currentState)
-        {
-            case StateController.State.DEEP:
-                OnDeep(prevState);
-                break;
-            case StateController.State.WET_GRIND:
-                OnWetGrind(prevState);
-                break;
-            case StateController.State.SHALLOW:
-                OnShallow(prevState);
-                break;
-            case StateController.State.DRY_GRIND:
-                OnDryGrind(prevState);
-                break;
-            case StateController.State.GROUND:
-                OnGround(prevState);
-                break;
-        }
     }
 
 	public void AddFollowerPart(GameObject go)
@@ -91,54 +71,6 @@ public class PlayerController : MonoBehaviour
 		Destroy(go.GetComponent<Collider>());
 		go.AddComponent<WaveFollower>();
 	}
-
-	void OnGround(StateController.State prevState)
-    {
-        //_BuffManager.Wipe(BuffManager.KEY_GLOBAL_SPEED);
-
-        GetComponentInChildren<Renderer>().material.color = Color.white;
-    }
-
-    void OnDryGrind(StateController.State prevState)
-    {
-        /*
-        ConsolidateIntoSingleBuff(BuffManager.KEY_GLOBAL_SPEED, _GrindSpeedBuff);
-        ConsolidateIntoSingleBuff(BuffManager.KEY_GLOBAL_TURN_SPEED, _GrindTurnBuff);
-        */
-
-        GetComponentInChildren<Renderer>().material.color = Color.blue;
-    }
-    void OnShallow(StateController.State prevState)
-    {
-        /*
-        if (prevState == StateController.State.DRY_GRIND)
-        {
-            _OffGrindSpeedBuff.SetModifier(_BuffManager.Wipe(BuffManager.KEY_GLOBAL_SPEED));
-            AddBuff(BuffManager.KEY_GLOBAL_SPEED, _OffGrindSpeedBuff);
-        }
-        else if (prevState == StateController.State.WET_GRIND)
-        {
-        }
-        */
-
-        //GetComponentInChildren<Renderer>().material.color = Color.white;
-    }
-
-    void OnWetGrind(StateController.State prevState)
-    {
-        //GetComponentInChildren<Renderer>().material.color = Color.blue;
-    }
-
-    void OnDeep(StateController.State prevState)
-    {
-        /*
-        _BuffManager.AddBuff(BuffManager.KEY_LOCAL_SPEED, new DecreasingBuff(_Potential * GameUtils.POTENTIAL_MODIFIER, 0.99f));
-        SetPotential(0f);
-        UpdateView();
-        */
-
-        //GetComponentInChildren<Renderer>().material.color = Color.white;
-    }
 
     public void AddRotation(float yRotation)
     {
@@ -181,12 +113,14 @@ public class PlayerController : MonoBehaviour
         _SpeedBuffs.Add(StateController.State.DEEP, new DecreasingBuff(1f, 0.999f));
         _SpeedBuffs.Add(StateController.State.WET_GRIND, new IncreasingBuff(1f, 1.0025f, 3f));
         _SpeedBuffs.Add(StateController.State.SHALLOW, new DecreasingBuff(1f, 0.9965f));
+        _SpeedBuffs.Add(StateController.State.BAR_GRIND, new IncreasingBuff(1f, 1.0025f, 3f));
         _SpeedBuffs.Add(StateController.State.DRY_GRIND, new IncreasingBuff(1f, 1.0025f, 3f));
         _SpeedBuffs.Add(StateController.State.GROUND, new DecreasingBuff(1f, 0.9f));
 
         _TurnSpeedBuffs.Add(StateController.State.DEEP, new DecreasingBuff(1f, 0.9f));
         _TurnSpeedBuffs.Add(StateController.State.WET_GRIND, new IncreasingBuff(1f, 1.01f, 2f));
         _TurnSpeedBuffs.Add(StateController.State.SHALLOW, new DecreasingBuff(1f, 0.999f));
+        _TurnSpeedBuffs.Add(StateController.State.BAR_GRIND, new IncreasingBuff(1f, 1.01f, 2f));
         _TurnSpeedBuffs.Add(StateController.State.DRY_GRIND, new IncreasingBuff(1f, 1.01f, 2f));
         _TurnSpeedBuffs.Add(StateController.State.GROUND, new DecreasingBuff(1f, 0.9f));
 	}
