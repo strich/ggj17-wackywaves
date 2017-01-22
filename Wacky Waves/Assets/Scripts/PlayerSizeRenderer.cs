@@ -91,7 +91,7 @@ public class PlayerSizeRenderer : MonoBehaviour
 		//		throw new ArgumentOutOfRangeException();
 		//}
 
-		ScaleTarget.transform.localScale = Vector3.Lerp(ScaleTarget.transform.localScale, new Vector3(1,2,1) * currentSize, Time.deltaTime);
+		ScaleTarget.transform.localScale = Vector3.Lerp(ScaleTarget.transform.localScale, new Vector3(1.5f,1,1) * currentSize, Time.deltaTime);
 		//FollowerObjects.transform.localScale = Vector3.Lerp(FollowerObjects.transform.localScale, Vector3.one / currentSize, Time.deltaTime);
 
 	}
