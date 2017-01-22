@@ -673,6 +673,9 @@ MonoBehaviour:
   TargetWaitTime: 5
   ForwardSpeed: 1
   AngleSmoothing: 2
+  ComboElementName: Sailboat
+  ComboElementPoints: 1
+  ComboElementMultiplier: 1
   _isDead: 0
   MovementType: 0
   BackNForthRange: 0

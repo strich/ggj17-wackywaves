@@ -1679,6 +1679,9 @@ MonoBehaviour:
   TargetWaitTime: 5
   ForwardSpeed: 1
   AngleSmoothing: 2
+  ComboElementName: Rogue Wave
+  ComboElementPoints: 1
+  ComboElementMultiplier: 1
   _isDead: 0
   MovementType: 1
   BackNForthRange: 10

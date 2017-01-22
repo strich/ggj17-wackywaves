@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GrindHandler : MonoBehaviour {
-    public const string DRY_GRIND = "DRY_GRIND";
-    public const string WET_GRIND = "WET_GRIND";
-    public const string GRIND_COMBO = "GRIND_COMBO";
+    public const string DRY_GRIND = "DRY GRIND";
+    public const string WET_GRIND = "WET GRIND";
+    public const string GRIND_COMBO = "GRIND COMBO";
 
     private static GrindHandler instance;
     public static GrindHandler Instance
