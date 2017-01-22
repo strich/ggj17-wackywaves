@@ -12,10 +12,11 @@ public class WaveFollower : MonoBehaviour {
 	public float HeightSpeed = 1f;
 
 	public float BaseWidth = -1f;
-	public float WidthModif = 1f;
+	public float WidthModif = 0.01f;
 	public float WidthSpeed = 1f;
 
 	private float startTime;
+
 	void Awake()
 	{
 		startTime = Time.time + 100 * Random.value;
@@ -36,10 +37,10 @@ public class WaveFollower : MonoBehaviour {
 			//\cos \left(1.2x\right)+\left(\sin \left(0.2x\right)\right)\ +\ 0.5\cos \left(2x\right)
 			//
 			float height = BaseHeight + HeightModif * 0.4f * (Mathf.Cos(1.2f * t) + Mathf.Sin(0.2f * t) + 0.5f * Mathf.Cos(2 * t));
-			float width = /*BaseWidth +*/ WidthModif + Mathf.Sin(0.02f * Time.time);
+			float width = /*BaseWidth +*/ WidthModif * 0.4f * (Mathf.Cos(1.2f * t) + Mathf.Sin(0.2f * t) + 0.5f * Mathf.Cos(2 * t));
 			var loc = transform.position;
 			loc.y = height;
-			loc.x = loc.x + width;
+			loc.x += width;
 			transform.position = loc;
 		}
 	}
