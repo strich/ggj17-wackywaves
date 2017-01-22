@@ -43,6 +43,8 @@ public class AmbAudioController : MonoBehaviour
             case StateController.State.SHALLOW:
 				ChangeClip(ShallowAudioClips[rnd.Next(ShallowAudioClips.Count)]);
                 break;
+            case StateController.State.BAR_GRIND:
+                break;
             case StateController.State.DRY_GRIND:
                 break;
             case StateController.State.GROUND:

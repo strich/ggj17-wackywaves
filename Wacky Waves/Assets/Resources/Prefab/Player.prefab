@@ -101,7 +101,7 @@ GameObject:
   - component: {fileID: 114200577188358508}
   - component: {fileID: 114824296053482320}
   - component: {fileID: 114731812025948684}
-  - component: {fileID: 114658663236410642}
+  - component: {fileID: 114242050971757494}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -531,6 +531,17 @@ MonoBehaviour:
   PrevTerrainHeight: 0
   PrevWaterType: 0
   CurrentWaterType: 0
+--- !u!114 &114242050971757494
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1697570559543654}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1391421d31daac479c912c0071a47a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114507890834595334
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -555,17 +566,6 @@ MonoBehaviour:
   RightTurnMed: []
   RightTurnBig: []
   rotInput: 0
---- !u!114 &114658663236410642
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1697570559543654}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b1391421d31daac479c912c0071a47a4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114698787827042496
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -588,11 +588,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 651aa40e9e780f244afdf5b819c84095, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SmallPrefab: {fileID: 1350064045466196, guid: c95814d6a8501ab4ebaf4f6876518a22,
+  SmallPrefab: {fileID: 1171415100829868, guid: 7d3d4cbc14d35dc47b5b6bc1f3204d5f,
     type: 2}
-  MediumPrefab: {fileID: 1477026828345374, guid: 503e06a69506cc64080b944c8b9da6bc,
+  MediumPrefab: {fileID: 1465982827726844, guid: 70fe5b7cd337c3f4c9c1a593242a4a12,
     type: 2}
-  BigPrefab: {fileID: 1887386056760572, guid: af4d119a67cb2c34ab9a3c9dba4b7490, type: 2}
+  BigPrefab: {fileID: 1011926575884898, guid: af4d119a67cb2c34ab9a3c9dba4b7490, type: 2}
   SmallShallowPrefab: {fileID: 1846668295055176, guid: 39bce864918ca614b87d1e2df2ffacf8,
     type: 2}
   MediumShallowPrefab: {fileID: 1894139221063692, guid: 047c00bc3ea6d054398e37c52138c873,

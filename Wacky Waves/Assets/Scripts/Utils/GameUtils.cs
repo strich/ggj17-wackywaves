@@ -9,14 +9,16 @@ public static class GameUtils
     const float WATER_SPEED_DEEP = 1.2f;
     const float WATER_SPEED_WET_GRIND = 1f;
     const float WATER_SPEED_SHALLOW = 1f;
+    const float WATER_SPEED_BAR_GRIND = 1f;
     const float WATER_SPEED_DRY_GRIND = 1f;
     const float WATER_SPEED_GROUND = 0.5f;
 
     const float TURN_SPEED_DEEP = 1f;
-    const float TURN_SPEED_WET_GRIND = 5f;
-    const float TURN_SPEED_SHALLOW = 5f;
-    const float TURN_SPEED_DRY_GRIND = 5f;
-    const float TURN_SPEED_GROUND = 1f;
+    const float TURN_SPEED_WET_GRIND = 1.5f;
+    const float TURN_SPEED_SHALLOW = 0.85f;
+    const float TURN_SPEED_BAR_GRIND = 1.5f;
+    const float TURN_SPEED_DRY_GRIND = 1.5f;
+    const float TURN_SPEED_GROUND = 0.75f;
 
 	public const float WAVE_SIZE = 1f;
 
@@ -55,6 +57,8 @@ public static class GameUtils
                 return WATER_SPEED_WET_GRIND;
             case StateController.State.SHALLOW:
                 return WATER_SPEED_SHALLOW;
+            case StateController.State.BAR_GRIND:
+                return WATER_SPEED_BAR_GRIND;
             case StateController.State.DRY_GRIND:
                 return WATER_SPEED_DRY_GRIND;
             case StateController.State.GROUND:
@@ -74,6 +78,8 @@ public static class GameUtils
                 return TURN_SPEED_WET_GRIND;
             case StateController.State.SHALLOW:
                 return TURN_SPEED_SHALLOW;
+            case StateController.State.BAR_GRIND:
+                return TURN_SPEED_BAR_GRIND;
             case StateController.State.DRY_GRIND:
                 return TURN_SPEED_DRY_GRIND;
             case StateController.State.GROUND:

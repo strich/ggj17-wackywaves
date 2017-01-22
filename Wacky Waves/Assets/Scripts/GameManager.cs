@@ -8,6 +8,8 @@ public class GameManager : MonoBehaviour
     public delegate void StateHandler(State state);
     public static event StateHandler OnStateChanged;
 
+	public string SceneToLoad;
+
     State _State = State.TITLE;
 
     void Awake()
@@ -41,7 +43,7 @@ public class GameManager : MonoBehaviour
             case State.TITLE:
                 break;
             case State.LIVE:
-                SceneManager.LoadScene("Chris Scene");
+                SceneManager.LoadScene(SceneToLoad);
                 break;
             case State.GAME_OVER:
                 UpdateGameOver();

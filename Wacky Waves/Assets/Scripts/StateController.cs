@@ -4,7 +4,7 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerController), typeof(WaterTypeResolver))]
 public class StateController : MonoBehaviour
 {
-    public enum State { NONE, DEEP, WET_GRIND, SHALLOW, DRY_GRIND, GROUND }
+    public enum State { NONE, DEEP, WET_GRIND, SHALLOW, BAR_GRIND, DRY_GRIND, GROUND }
 
     const float GRIND_WIDTH = 2f;
 
@@ -55,17 +55,22 @@ public class StateController : MonoBehaviour
             case StateController.State.WET_GRIND:
                 ComboManager.Instance.AddComboElement(GrindHandler.WET_GRIND);
                 break;
+            case StateController.State.BAR_GRIND:
+                ComboManager.Instance.AddComboElement(GrindHandler.BAR_GRIND);
+                break;
             default:
                 //nothing doing
                 break;
-
-
         }
     }
 
     State GetCurrentState()
     {
-        if (IsDryGrinding())
+        if (IsBarGrinding())
+        {
+            return State.BAR_GRIND;
+        }
+        else if (IsDryGrinding())
         {
             return State.DRY_GRIND;
         }
@@ -85,6 +90,11 @@ public class StateController : MonoBehaviour
             default:
                 return State.NONE;
         }
+    }
+
+    bool IsBarGrinding()
+    {
+        return IsOver(transform.position, WaterType.Shallow) && IsOver(LeftSensor.position, WaterType.Deep) && IsOver(RightSensor.position, WaterType.Deep);
     }
 
     bool IsDryGrinding()

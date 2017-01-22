@@ -24,6 +24,7 @@ public class PlayerSizeRenderer : MonoBehaviour
 	private PlayerWaveSize _prevWaveSize;
 	private bool _useShallowWave = false;
 
+	private MusicManager _musicManager;
 	private PlayerController _playerController;
 	private StateController _stateController;
 	public GameObject FollowerObjects;
@@ -31,6 +32,7 @@ public class PlayerSizeRenderer : MonoBehaviour
 
 	void Start ()
 	{
+		_musicManager = GameObject.Find("Music Manager").GetComponent<MusicManager>(); // Deal with it yo
 		_playerController = GetComponent<PlayerController>();
 		_stateController = GetComponent<StateController>();
 		_stateController.OnStateChanged += OnStateChanged;
@@ -49,6 +51,8 @@ public class PlayerSizeRenderer : MonoBehaviour
 				break;
 			case StateController.State.SHALLOW:
 				_useShallowWave = true;
+				break;
+			case StateController.State.BAR_GRIND:
 				break;
 			case StateController.State.DRY_GRIND:
 				break;
@@ -108,6 +112,9 @@ public class PlayerSizeRenderer : MonoBehaviour
 
 	private void ChangeWaveType()
 	{
+		//_musicManager.SetIntensity((int)currentSize);
+		//if(currentSize > 1.01f)_musicManager.IncreaseIntensity();
+
 		for (int i = 0; i < Renderer.transform.childCount; i++)
 		{
 			Destroy(Renderer.transform.GetChild(i).gameObject);
@@ -116,12 +123,15 @@ public class PlayerSizeRenderer : MonoBehaviour
 		switch (_currentWaveSize)
 		{
 			case PlayerWaveSize.Small:
+				_musicManager.SetIntensity(1);
 				Instantiate(_useShallowWave ? SmallShallowPrefab : SmallPrefab, Renderer.transform, false);
 				break;
 			case PlayerWaveSize.Medium:
+				_musicManager.SetIntensity(2);
 				Instantiate(_useShallowWave ? MediumShallowPrefab : MediumPrefab, Renderer.transform, false);
 				break;
 			case PlayerWaveSize.Big:
+				_musicManager.SetIntensity(3);
 				Instantiate(_useShallowWave ? BigShallowPrefab : BigPrefab, Renderer.transform, false);
 				break;
 			default:

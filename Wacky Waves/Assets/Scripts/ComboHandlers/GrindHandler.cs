@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GrindHandler : MonoBehaviour {
+
     public const string DRY_GRIND = "DRY GRIND";
     public const string WET_GRIND = "WET GRIND";
     public const string GRIND_COMBO = "GRIND COMBO";
+    public const string BAR_GRIND = "BAR_GRIND";
 
     private static GrindHandler instance;
     public static GrindHandler Instance
@@ -34,6 +36,11 @@ public class GrindHandler : MonoBehaviour {
         WetGrind.Multiplier = 0;
         WetGrind.Points = 1;
         ComboManager.Instance.CreateComboElement(WetGrind);
+        ComboManager.ComboElement BarGrind = new ComboManager.ComboElement();
+        BarGrind.Name = BAR_GRIND;
+        BarGrind.Multiplier = 0;
+        BarGrind.Points = 1;
+        ComboManager.Instance.CreateComboElement(BarGrind);
     }
 
     // Use this for initialization
@@ -69,15 +76,15 @@ public class GrindHandler : MonoBehaviour {
         {
             case DRY_GRIND:
                     Debug.Log(DRY_GRIND + " x "+quantity);
-                
-                   
-                
                 break;
             case WET_GRIND:
                 Debug.Log(WET_GRIND + " x " + quantity);
                 break;
+            case BAR_GRIND:
+                Debug.Log(BAR_GRIND + " x " + quantity);
+                break;
             default:
-                Debug.Log("Not for Grinds Handler");
+                //Debug.Log("Not for Grinds Handler");
                 break;
 
         }
