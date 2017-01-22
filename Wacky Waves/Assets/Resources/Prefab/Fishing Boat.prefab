@@ -122,7 +122,7 @@ GameObject:
   - component: {fileID: 65864209060495200}
   m_Layer: 0
   m_Name: collider
-  m_TagString: Untagged
+  m_TagString: NPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -205,7 +205,7 @@ GameObject:
   - component: {fileID: 54769102363611766}
   m_Layer: 0
   m_Name: Fishing Boat
-  m_TagString: Untagged
+  m_TagString: NPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

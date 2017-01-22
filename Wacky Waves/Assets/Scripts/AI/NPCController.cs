@@ -129,14 +129,14 @@ public class NPCController : MonoBehaviour
 		//	Time.deltaTime * AngleSmoothing);
 	}
 
-	public void TriggerDestroyed()
+	public void TriggerDestroyed(bool shouldConsumeParts = true)
 	{
 		if (_isDead) return;
 
 		_isDead = true;
 		//GetComponentInChildren<Rigidbody>().isKinematic = false;
 		//GetComponentInChildren<Rigidbody>().useGravity = true;
-		ConsumeBrokenParts(GetComponentsInChildren<MeshRenderer>().Select(c => c.gameObject).ToList()); // Such hax
+		if(shouldConsumeParts) ConsumeBrokenParts(GetComponentsInChildren<MeshRenderer>().Select(c => c.gameObject).ToList()); // Such hax
 		Destroy(gameObject, 10f);
 	}
 

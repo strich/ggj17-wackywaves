@@ -1,17 +1,20 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
 	public float ForwardSpeedModifier = 1.0f;
 
-	public float TurnSpeed = 30.0f;
 	public float AngleSmoothing = 2.0f;
 	public float PotentialDropOff = 2f;
 
 	public GameObject FollowerObjectsContainer;
 
-	[SerializeField]
+    [Tooltip("For debug only")]
+    public float INSPECTOR_SPEED;
+
+    [SerializeField]
     float _Rotation;
 
     //NOTE: Testing vars
@@ -23,8 +26,14 @@ public class PlayerController : MonoBehaviour
     StateController _StateController;
 
     /* Buffs */
-    Buff _GrindBuff;
-    Buff _OffGrindBuff;
+    Buff _GrindSpeedBuff;
+    Buff _OffGrindSpeedBuff;
+
+    Buff _GrindTurnBuff;
+    Buff _OffGrindTurnBuff;
+
+    Dictionary<StateController.State, Buff> _SpeedBuffs = new Dictionary<StateController.State, Buff>();
+    Dictionary<StateController.State, Buff> _TurnSpeedBuffs = new Dictionary<StateController.State, Buff>();
 
     void Awake()
     {
@@ -51,6 +60,9 @@ public class PlayerController : MonoBehaviour
     {
         _BuffManager.Wipe(BuffManager.KEY_LOCAL_SPEED);
 
+        ConsolidateIntoSingleBuff(BuffManager.KEY_GLOBAL_SPEED, _SpeedBuffs[currentState]);
+        ConsolidateIntoSingleBuff(BuffManager.KEY_GLOBAL_TURN_SPEED, _TurnSpeedBuffs[currentState]);
+
         switch (currentState)
         {
             case StateController.State.DEEP:
@@ -63,7 +75,7 @@ public class PlayerController : MonoBehaviour
                 OnShallow(prevState);
                 break;
             case StateController.State.DRY_GRIND:
-                OnWetGrind(prevState);
+                OnDryGrind(prevState);
                 break;
             case StateController.State.GROUND:
                 OnGround(prevState);
@@ -80,37 +92,50 @@ public class PlayerController : MonoBehaviour
 
 	void OnGround(StateController.State prevState)
     {
+        //_BuffManager.Wipe(BuffManager.KEY_GLOBAL_SPEED);
+
+        GetComponentInChildren<Renderer>().material.color = Color.white;
     }
 
     void OnDryGrind(StateController.State prevState)
     {
-        _GrindBuff.SetModifier(1f);
-        AddBuff(BuffManager.KEY_GLOBAL_SPEED, _GrindBuff);
-        RemoveBuff(BuffManager.KEY_GLOBAL_SPEED, _OffGrindBuff);
-    }
+        /*
+        ConsolidateIntoSingleBuff(BuffManager.KEY_GLOBAL_SPEED, _GrindSpeedBuff);
+        ConsolidateIntoSingleBuff(BuffManager.KEY_GLOBAL_TURN_SPEED, _GrindTurnBuff);
+        */
 
+        GetComponentInChildren<Renderer>().material.color = Color.blue;
+    }
     void OnShallow(StateController.State prevState)
     {
+        /*
         if (prevState == StateController.State.DRY_GRIND)
         {
-            _OffGrindBuff.SetModifier(_GrindBuff.Modifier);
-            AddBuff(BuffManager.KEY_GLOBAL_SPEED, _OffGrindBuff);
-            RemoveBuff(BuffManager.KEY_GLOBAL_SPEED, _GrindBuff);
+            _OffGrindSpeedBuff.SetModifier(_BuffManager.Wipe(BuffManager.KEY_GLOBAL_SPEED));
+            AddBuff(BuffManager.KEY_GLOBAL_SPEED, _OffGrindSpeedBuff);
         }
         else if (prevState == StateController.State.WET_GRIND)
         {
         }
+        */
+
+        GetComponentInChildren<Renderer>().material.color = Color.white;
     }
 
     void OnWetGrind(StateController.State prevState)
     {
+        GetComponentInChildren<Renderer>().material.color = Color.blue;
     }
 
     void OnDeep(StateController.State prevState)
     {
+        /*
         _BuffManager.AddBuff(BuffManager.KEY_LOCAL_SPEED, new DecreasingBuff(_Potential * GameUtils.POTENTIAL_MODIFIER, 0.99f));
         SetPotential(0f);
         UpdateView();
+        */
+
+        GetComponentInChildren<Renderer>().material.color = Color.white;
     }
 
     public void AddRotation(float yRotation)
@@ -128,20 +153,47 @@ public class PlayerController : MonoBehaviour
         _BuffManager.RemoveBuff(key, buff);
     }
 
+    public void HitCliff(Collider collider)
+    {
+        Debug.Log("Hit Cliff");
+    }
+
     void ApplyInput()
     {
-        _Rotation += Input.GetAxisRaw("Horizontal") * TurnSpeed;
+        _Rotation += Input.GetAxisRaw("Horizontal") * GetTurnSpeed();
+    }
+
+    void ConsolidateIntoSingleBuff(string key, Buff buff)
+    {
+        buff.SetModifier(_BuffManager.Wipe(key));
+        AddBuff(key, buff);
     }
 
     void CreateBuffs()
     {
-        _GrindBuff = new IncreasingBuff(1f, 1.005f, 5f);
-        _OffGrindBuff = new DecreasingBuff(1f, 0.98f);
+        _SpeedBuffs.Add(StateController.State.DEEP, new DecreasingBuff(1f, 0.999f));
+        _SpeedBuffs.Add(StateController.State.WET_GRIND, new IncreasingBuff(1f, 1.0025f, 3f));
+        _SpeedBuffs.Add(StateController.State.SHALLOW, new DecreasingBuff(1f, 0.9965f));
+        _SpeedBuffs.Add(StateController.State.DRY_GRIND, new IncreasingBuff(1f, 1.0025f, 3f));
+        _SpeedBuffs.Add(StateController.State.GROUND, new DecreasingBuff(1f, 0.9f));
+
+        _TurnSpeedBuffs.Add(StateController.State.DEEP, new DecreasingBuff(1f, 0.9f));
+        _TurnSpeedBuffs.Add(StateController.State.WET_GRIND, new IncreasingBuff(1f, 1.01f, 2f));
+        _TurnSpeedBuffs.Add(StateController.State.SHALLOW, new DecreasingBuff(1f, 0.999f));
+        _TurnSpeedBuffs.Add(StateController.State.DRY_GRIND, new IncreasingBuff(1f, 1.01f, 2f));
+        _TurnSpeedBuffs.Add(StateController.State.GROUND, new DecreasingBuff(1f, 0.9f));
     }
 
     float GetForwardSpeed()
     {
+        INSPECTOR_SPEED =
+            ForwardSpeedModifier * _BuffManager.Modify(BuffManager.KEY_GLOBAL_SPEED, _BuffManager.Modify(BuffManager.KEY_LOCAL_SPEED, GameUtils.GetStateSpeed(_StateController.CurrentState)));
         return ForwardSpeedModifier * _BuffManager.Modify(BuffManager.KEY_GLOBAL_SPEED, _BuffManager.Modify(BuffManager.KEY_LOCAL_SPEED, GameUtils.GetStateSpeed(_StateController.CurrentState)));
+    }
+
+    float GetTurnSpeed()
+    {
+        return GameUtils.GetStateTurnSpeed(_StateController.CurrentState);
     }
 
     void Move()

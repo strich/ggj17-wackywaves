@@ -1,15 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class CollisionManager : MonoBehaviour
 {
-	public bool IsWave = false;
+    const string TAG_CLIFF = "Cliff";
+    const string TAG_NPC = "NPC";
+
+    PlayerController _PlayerController;
 
 	void Start ()
 	{
-		
+        _PlayerController = GetComponentInParent<PlayerController>();
 	}
 	
 	void Update () {
@@ -18,18 +18,36 @@ public class CollisionManager : MonoBehaviour
 
 	void OnTriggerEnter(Collider collider)
 	{
-		//if(collider.name.Contains("Front")) Debug.Log("We hit the front!");
-		//if(collider.name.Contains("Back")) Debug.Log("We hit the back!");
+        //if(collider.name.Contains("Front")) Debug.Log("We hit the front!");
+        //if(collider.name.Contains("Back")) Debug.Log("We hit the back!");
 
-		// Mother of god what am i doing. Will fix...need dinner
-		var npcController = collider.attachedRigidbody.GetComponent<NPCController>();
-		npcController.TriggerDestroyed();
-	}
+        if (collider.gameObject.CompareTag(TAG_CLIFF))
+        {
+            _PlayerController.HitCliff(collider);
+        }
+		else if (collider.gameObject.CompareTag("NPC-Wave"))
+		{
+			WaveCollision(collider);
+		}
+		else if (collider.gameObject.CompareTag(TAG_NPC))
+        {
+            var npcController = collider.attachedRigidbody.GetComponent<NPCController>();
+            npcController.TriggerDestroyed();
+        }
+    }
 
-	void OnTriggerExit(Collider collider)
+	void WaveCollision(Collider collider)
 	{
-		//Debug.Log("OnTriggerExit");
-	}
+		if (collider.name.Contains("Front"))
+		{
+			_PlayerController.AddBuff("Wave Frontal Hit", new DecreasingBuff(-5f, 0.99f));
+		}
+		else if (collider.name.Contains("Back"))
+		{
+			_PlayerController.AddBuff("Wave Behind Hit", new IncreasingBuff(2f, 0.99f, 4f));
+		}
 
-	
+		var npcController = collider.attachedRigidbody.GetComponent<NPCController>();
+		npcController.TriggerDestroyed(false);
+	}
 }

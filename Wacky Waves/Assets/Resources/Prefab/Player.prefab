@@ -1567,10 +1567,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ForwardSpeedModifier: 0.1
-  TurnSpeed: 2
   AngleSmoothing: 2
   PotentialDropOff: 2
   FollowerObjectsContainer: {fileID: 1429131524666472}
+  INSPECTOR_SPEED: 0
   _Rotation: 0
   _Potential: 0
 --- !u!136 &136765078817475566
