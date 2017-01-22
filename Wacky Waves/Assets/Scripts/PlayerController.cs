@@ -119,12 +119,12 @@ public class PlayerController : MonoBehaviour
         }
         */
 
-        GetComponentInChildren<Renderer>().material.color = Color.white;
+        //GetComponentInChildren<Renderer>().material.color = Color.white;
     }
 
     void OnWetGrind(StateController.State prevState)
     {
-        GetComponentInChildren<Renderer>().material.color = Color.blue;
+        //GetComponentInChildren<Renderer>().material.color = Color.blue;
     }
 
     void OnDeep(StateController.State prevState)
@@ -135,7 +135,7 @@ public class PlayerController : MonoBehaviour
         UpdateView();
         */
 
-        GetComponentInChildren<Renderer>().material.color = Color.white;
+        //GetComponentInChildren<Renderer>().material.color = Color.white;
     }
 
     public void AddRotation(float yRotation)
