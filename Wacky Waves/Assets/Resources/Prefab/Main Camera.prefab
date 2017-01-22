@@ -39,6 +39,7 @@ GameObject:
   - component: {fileID: 114356503015611558}
   - component: {fileID: 82278255857676602}
   - component: {fileID: 82303277476976856}
+  - component: {fileID: 114382098372333696}
   m_Layer: 0
   m_Name: Ambient Audio
   m_TagString: Untagged
@@ -670,6 +671,17 @@ MonoBehaviour:
   - {fileID: 8300000, guid: c7c858a10232dec4c8a9d9f79efa18fe, type: 3}
   SourceA: {fileID: 82278255857676602}
   SourceB: {fileID: 82303277476976856}
+--- !u!114 &114382098372333696
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1101614977459574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 976bd76181b22b44cbd02f838f2d42f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114447709732121994
 MonoBehaviour:
   m_ObjectHideFlags: 1
