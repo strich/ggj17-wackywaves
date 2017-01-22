@@ -18,7 +18,16 @@ public class TerrainFlattenTool : MonoBehaviour {
                 float height = heights[i, j];
                 float clampedHeight = Clamp(_Terrain.terrainData.size.y * height);
                 float adjustedClampedHeight = clampedHeight / _Terrain.terrainData.size.y;
-                heights[i, j] = adjustedClampedHeight;
+
+                if (i == 0 || i == heights.GetLength(0) - 1 ||
+                            j == 0 || j == heights.GetLength(1) - 1)
+                {
+                    heights[i, j] = 1;
+                }
+                else
+                {
+                    heights[i, j] = adjustedClampedHeight;
+                }
             }
         }
         _Terrain.terrainData.SetHeights(0, 0, heights);
