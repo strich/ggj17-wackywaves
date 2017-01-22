@@ -26,10 +26,14 @@ public class GrindHandler : MonoBehaviour {
         ComboManager.Instance.ComboHandlers += HandleGrind;
         ComboManager.ComboElement DryGrind = new ComboManager.ComboElement();
         DryGrind.Name = DRY_GRIND;
+        DryGrind.Multiplier = 0;
         DryGrind.Points = 1;
+        ComboManager.Instance.CreateComboElement(DryGrind);
         ComboManager.ComboElement WetGrind = new ComboManager.ComboElement();
         WetGrind.Name = WET_GRIND;
+        WetGrind.Multiplier = 0;
         WetGrind.Points = 1;
+        ComboManager.Instance.CreateComboElement(WetGrind);
     }
 
     // Use this for initialization
@@ -70,7 +74,7 @@ public class GrindHandler : MonoBehaviour {
                 
                 break;
             case WET_GRIND:
-                Debug.Log(DRY_GRIND + " x " + quantity);
+                Debug.Log(WET_GRIND + " x " + quantity);
                 break;
             default:
                 Debug.Log("Not for Grinds Handler");

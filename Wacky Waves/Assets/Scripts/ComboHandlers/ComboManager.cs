@@ -15,7 +15,7 @@ public class ComboManager : MonoBehaviour {
     public delegate void ComboHandler(string tag, int quantity);
     public event ComboHandler ComboHandlers;
 
-    public float ComboCountdown;
+    public float ComboCountdown = 1;
     private float countdown;
      
     private Dictionary<string, int> CurrentCombo;
@@ -51,7 +51,7 @@ public class ComboManager : MonoBehaviour {
         public string  Name;       //dolphin / surfer etc?
   //      public bool Instant;    // or continuous - continuous now done by repeated sends
         public int Points;     // instant points, or points per second
-      //  int Quantity;       // number of elements / lenght of grind
+        public int Multiplier;       // 
     }
 
     void Awake()
@@ -61,8 +61,8 @@ public class ComboManager : MonoBehaviour {
     }
     // Use this for initialization
     void Start () {
-		
-	}
+        ResetCombo();
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -73,10 +73,17 @@ public class ComboManager : MonoBehaviour {
             {
                 countdown = 0;
                 // Combo Over!
+                foreach (KeyValuePair<string,int> el in CurrentCombo)
+                {
+                    Debug.Log(el.Key + " - " + el.Value);
+                   // comboScore += el.Value;
+                }
 
+                Debug.Log("COMBO OVER!!! " + comboScore + " x " + comboMultiplier + " = " +comboScore*comboMultiplier);
                 // Send Points to ScoreManager
                 ScoreManager.Instance.UpdateScore(comboMultiplier * comboScore, COMBO_OVER);
                 // Clear Combos
+
                 ResetCombo();
                 
 
@@ -84,12 +91,17 @@ public class ComboManager : MonoBehaviour {
         }
 	}
 
+    //
+
     void ResetCombo()
     {
-        ComboHandlers.Invoke(COMBO_OVER, 0);
+        if (ComboHandlers != null)
+        {
+            ComboHandlers.Invoke(COMBO_OVER, 0);
+        }
         CurrentCombo    = new Dictionary<string, int> ();
         comboScore      = 0;
-        comboMultiplier = 0;
+        comboMultiplier = 1;
     }
 
 
@@ -117,17 +129,20 @@ public class ComboManager : MonoBehaviour {
             //}
             // else a registered combo handler 
             // invocation will deal with it;
-
+            
             if (inCombo)
             {
-                CurrentCombo[elementName] = count + 1;
+                count++;    
+                CurrentCombo[elementName] = count;
             }
             else
             {
                 CurrentCombo.Add(elementName, 1);
                 count = 1;
+                
             }
-       
+        comboScore += element.Points;
+        comboMultiplier += element.Multiplier;
            
 
         countdown = ComboCountdown;
