@@ -166,9 +166,9 @@ public class PlayerController : MonoBehaviour
     void CreateBuffs()
     {
         _SpeedBuffs.Add(StateController.State.DEEP, new DecreasingBuff(1f, 0.999f));
-        _SpeedBuffs.Add(StateController.State.WET_GRIND, new IncreasingBuff(1f, 1.005f, 4f));
-        _SpeedBuffs.Add(StateController.State.SHALLOW, new DecreasingBuff(1f, 0.995f));
-        _SpeedBuffs.Add(StateController.State.DRY_GRIND, new IncreasingBuff(1f, 1.005f, 4f));
+        _SpeedBuffs.Add(StateController.State.WET_GRIND, new IncreasingBuff(1f, 1.0025f, 3f));
+        _SpeedBuffs.Add(StateController.State.SHALLOW, new DecreasingBuff(1f, 0.9965f));
+        _SpeedBuffs.Add(StateController.State.DRY_GRIND, new IncreasingBuff(1f, 1.0025f, 3f));
         _SpeedBuffs.Add(StateController.State.GROUND, new DecreasingBuff(1f, 0.9f));
 
         _TurnSpeedBuffs.Add(StateController.State.DEEP, new DecreasingBuff(1f, 0.9f));
