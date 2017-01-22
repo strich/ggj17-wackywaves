@@ -47,8 +47,8 @@ public class AudioCrossFader : MonoBehaviour
 			_source0 = gameObject.AddComponent(typeof(AudioSource)) as AudioSource;
 			_source1 = gameObject.AddComponent(typeof(AudioSource)) as AudioSource;
 
-			_source0.hideFlags = HideFlags.HideInInspector;
-			_source1.hideFlags = HideFlags.HideInInspector;
+			//_source0.hideFlags = HideFlags.HideInInspector;
+			//_source1.hideFlags = HideFlags.HideInInspector;
 			return;
 		}
 
@@ -68,8 +68,8 @@ public class AudioCrossFader : MonoBehaviour
 				break;
 		}//end switch
 
-		_source0.hideFlags = HideFlags.HideInInspector;
-		_source1.hideFlags = HideFlags.HideInInspector;
+		//_source0.hideFlags = HideFlags.HideInInspector;
+		//_source1.hideFlags = HideFlags.HideInInspector;
 	}
 
 
@@ -83,23 +83,23 @@ public class AudioCrossFader : MonoBehaviour
 	void OnDestroy()
 	{
 
-#if UNITY_EDITOR
-		if (_source0)
-		{
-			DestroyImmediate(_source0);
-		}
-		if (_source1)
-		{
-			DestroyImmediate(_source1);
-		}
-#else
-        if (_source0) {
-            Destroy(_source0);
-        }
-        if (_source1) {
-            Destroy(_source1);
-        }
-#endif
+//#if UNITY_EDITOR
+//		if (_source0)
+//		{
+//			DestroyImmediate(_source0);
+//		}
+//		if (_source1)
+//		{
+//			DestroyImmediate(_source1);
+//		}
+//#else
+//        if (_source0) {
+//            Destroy(_source0);
+//        }
+//        if (_source1) {
+//            Destroy(_source1);
+//        }
+//#endif
 	}
 
 
@@ -141,4 +141,11 @@ public class AudioCrossFader : MonoBehaviour
 		_isFirst = true;
 	}//end CrossFade()
 
+	public void StopAll()
+	{
+		_source0.Stop();
+		_source0.DOKill();
+		_source1.Stop();
+		_source1.DOKill();
+	}
 }

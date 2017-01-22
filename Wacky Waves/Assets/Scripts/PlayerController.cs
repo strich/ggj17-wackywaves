@@ -163,6 +163,11 @@ public class PlayerController : MonoBehaviour
         _Rotation += Input.GetAxisRaw("Horizontal") * GetTurnSpeed();
     }
 
+	public float GetRawRotInput()
+	{
+		return Input.GetAxis("Horizontal");
+	}
+
     void ConsolidateIntoSingleBuff(string key, Buff buff)
     {
         buff.SetModifier(_BuffManager.Wipe(key));
