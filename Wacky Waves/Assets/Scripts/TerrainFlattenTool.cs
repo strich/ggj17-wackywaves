@@ -28,15 +28,15 @@ public class TerrainFlattenTool : MonoBehaviour {
     {
         if (value <= WaterTypeResolver.WATER_HEIGHT_DEEP)
         {
-            return WaterTypeResolver.WATER_HEIGHT_DEEP;
+            return 0;
         }
         else if (value <= WaterTypeResolver.WATER_HEIGHT_SHALLOW)
         {
-            return WaterTypeResolver.WATER_HEIGHT_SHALLOW;
+            return 22.5f;
         }
         else if (value <= WaterTypeResolver.WATER_HEIGHT_GROUND)
         {
-            return WaterTypeResolver.WATER_HEIGHT_GROUND;
+            return 24;
         }
 
         return value;
