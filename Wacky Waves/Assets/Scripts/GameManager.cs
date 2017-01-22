@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
 
     public delegate void StateHandler(State state);
     public static event StateHandler OnStateChanged;
+    public AudioClip Laugh;
 
 	public string SceneToLoad;
 
@@ -43,6 +44,7 @@ public class GameManager : MonoBehaviour
             case State.TITLE:
                 break;
             case State.LIVE:
+                GetComponent<AudioSource>().PlayOneShot(Laugh);
                 SceneManager.LoadScene(SceneToLoad);
                 break;
             case State.GAME_OVER:
